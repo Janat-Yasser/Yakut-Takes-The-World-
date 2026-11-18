@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-w="home">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yakut's Royal World Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Nunito+Sans:wght@400;600;700;800&family=Caveat:wght@600;700&family=Bodoni+Moda:opsz,wght@6..96,700..900&family=Baloo+Bhaijaan+2:wght@500..800&family=Tajawal:wght@400;500;700;800&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Plan: a family photo magazine. Calm paper background so the (very colorful) photos are the star.
+   One type system everywhere; each country only changes the accent color.
+   Home = hero + newsstand of clean covers. Country = opener + photo/story spreads + Karim's quote. */
+:root{
+  --paper:#faf6f1; --card:#ffffff; --ink:#221c26; --muted:#6f6573; --line:#ebe3da;
+  --accent:#c1272d; --tint:color-mix(in srgb,var(--accent) 9%,var(--paper));
+  --display:"Bricolage Grotesque","Nunito Sans",system-ui,sans-serif;
+  --body:"Nunito Sans",system-ui,sans-serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
+  --mast:"Bodoni Moda",Didot,Georgia,serif;
+  --radius:24px;
+  --shadow:0 1px 2px rgba(40,20,40,.06),0 18px 40px -22px rgba(40,20,40,.35);
+  color-scheme:light;
+}
+html[lang="ar"]{--display:"Baloo Bhaijaan 2","Tajawal",system-ui,sans-serif;--body:"Tajawal",system-ui,sans-serif;--hand:"Aref Ruqaa",serif;--mast:"Aref Ruqaa",serif}
+html[lang="ar"] *{letter-spacing:0!important}
+[data-w="home"]{--accent:#c1272d}
+[data-w="morocco"]{--accent:#c1272d}
+[data-w="egypt"]{--accent:#b07d1c}
+[data-w="rome"]{--accent:#a4282c}
+[data-w="ottoman"]{--accent:#c8102e}
+[data-w="japan"]{--accent:#cf3653}
+[data-w="vikings"]{--accent:#1f4e8c}
+[data-w="versailles"]{--accent:#2c55a3}
+[data-w="west"]{--accent:#9b4a1f}
+[data-w="mexico"]{--accent:#0f7a50}
+[data-w="spain"]{--accent:#c9401a}
+[data-w="india"]{--accent:#d46f00}
+[data-w="home-sweet-home"]{--accent:#cf4f74}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.02em;text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+#sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55}
+header,main,footer{position:relative;z-index:1}
+
+/* ---------- header ---------- */
+header.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap}
+.logo svg{width:30px;height:30px;color:var(--accent);transition:transform .8s cubic-bezier(.2,1.3,.4,1)}
+.logo:hover svg{transform:rotate(90deg)}
+.logo b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em}
+.logo small{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-inline-start:auto;mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 14px),transparent)}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;font-size:14px;font-weight:700;color:var(--muted);padding:7px 12px;border-radius:99px;transition:background .2s,color .2s}
+.nav a:hover{color:var(--ink);background:var(--line)}
+.nav a[aria-current="page"]{color:#fff;background:var(--accent)}
+.langs{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px;flex:none}
+.langs button{border:0;background:none;font-size:13px;font-weight:800;padding:6px 11px;border-radius:99px;color:var(--muted);transition:all .2s}
+.langs button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.langs button:lang(ar){font-family:"Tajawal",sans-serif}
+
+/* ---------- shared bits ---------- */
+.kicker{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:99px;background:var(--ink);color:#fff;text-decoration:none;font-weight:800;transition:transform .25s cubic-bezier(.2,1.4,.4,1),background .25s}
+.btn:hover{transform:translateY(-2px);background:var(--accent)}
+.btn .arr{transition:transform .25s}.btn:hover .arr{transform:translateX(4px)}
+html[dir="rtl"] .btn .arr{transform:scaleX(-1)}html[dir="rtl"] .btn:hover .arr{transform:scaleX(-1) translateX(4px)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}}
+@keyframes toss{from{opacity:0;transform:translateY(60px) rotate(calc(var(--r,0deg) + 10deg)) scale(.92)}}
+@keyframes pop{0%{opacity:0;transform:scale(.4) rotate(-30deg)}70%{transform:scale(1.1) rotate(8deg)}100%{opacity:1}}
+
+/* ---------- the magazine cover ---------- */
+.cover{container-type:inline-size;position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:#222;box-shadow:var(--shadow)}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.cover::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 52%,rgba(0,0,0,.7) 100%)}
+.cv-top{position:absolute;z-index:2;top:4.5cqw;inset-inline:0;text-align:center;color:#fff}
+.cv-mast{font-family:var(--mast);font-weight:900;font-size:23cqw;line-height:.9;letter-spacing:.01em;text-shadow:0 .5cqw 3cqw rgba(0,0,0,.3)}
+html[lang="ar"] .cv-mast{font-size:20cqw;line-height:1.1}
+.cv-issue{margin-top:1.5cqw;font-size:3.1cqw;font-weight:800;letter-spacing:.24em;text-transform:uppercase;opacity:.92}
+.cv-bottom{position:absolute;z-index:2;inset-inline:6cqw;bottom:6cqw;color:#fff}
+.cv-title{font-family:var(--display);font-weight:800;font-size:9.5cqw;line-height:1;letter-spacing:-.02em}
+.cv-line{margin-top:2cqw;font-size:4.2cqw;font-weight:700;line-height:1.25;opacity:.95;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cv-dot{display:inline-block;width:2.2cqw;height:2.2cqw;border-radius:50%;background:var(--accent);margin-inline-end:1.6cqw;vertical-align:.3cqw;box-shadow:0 0 0 .7cqw rgba(255,255,255,.85)}
+
+/* ---------- HOME ---------- */
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,6vw,80px);align-items:center;padding:clamp(40px,7vw,90px) 0 clamp(40px,6vw,70px)}
+.hero h1{white-space:nowrap;font-size:clamp(84px,13.5vw,176px);line-height:.86;letter-spacing:-.05em;margin:.12em 0 .12em;color:var(--ink)}
+html[lang="ar"] .hero h1{line-height:1.15}
+.hero h1 span{display:inline-block;animation:drop .9s cubic-bezier(.2,1.6,.4,1) both;animation-delay:calc(var(--i)*80ms + 100ms)}
+.hero h1 span:hover{animation:jelly .7s both}
+.hero h1 .star{color:var(--accent)}
+@keyframes drop{from{opacity:0;transform:translateY(-70%) rotate(-10deg)}}
+@keyframes jelly{30%{transform:scale(1.2,.82)}45%{transform:scale(.88,1.16)}60%{transform:scale(1.06,.95)}100%{transform:none}}
+.hero .line{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.4vw,30px);line-height:1.2;letter-spacing:-.01em;max-width:22ch;animation:rise .8s both .45s}
+.hero p{color:var(--muted);max-width:44ch;margin:18px 0 28px;animation:rise .8s both .55s}
+.hero .btn{animation:rise .8s both .65s}
+.mosaic{position:relative;aspect-ratio:1/1;max-width:600px;width:100%;margin-inline:auto}
+.mosaic figure{position:absolute;margin:0;background:#fff;padding:8px;border-radius:20px;box-shadow:var(--shadow);transform:rotate(var(--r));animation:toss 1s cubic-bezier(.2,1.2,.3,1) both;animation-delay:calc(var(--i)*120ms + 250ms);transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
+.mosaic figure:hover{transform:rotate(0) scale(1.05);z-index:5}
+.mosaic img{border-radius:14px;aspect-ratio:4/3;object-fit:cover;width:100%}
+.mosaic .m1{width:58%;top:4%;inset-inline-start:0;--r:-4deg;z-index:2}
+.mosaic .m2{width:46%;top:0;inset-inline-end:0;--r:5deg}
+.mosaic .m3{width:52%;bottom:6%;inset-inline-end:2%;--r:-3deg;z-index:3}
+.mosaic .m4{width:44%;bottom:0;inset-inline-start:4%;--r:4deg;z-index:2}
+.mosaic .m4 img,.mosaic .m2 img{aspect-ratio:1/1}
+.badge{position:absolute;z-index:6;top:44%;inset-inline-start:44%;width:clamp(92px,11vw,124px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:var(--accent);color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(14px,1.5vw,17px);line-height:1.05;padding:12px;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 70%,transparent);animation:pop .7s both 1s}
+.badge b{display:block;font-size:2em;line-height:.9}
+
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+.section-head h2{font-size:clamp(36px,5vw,60px)}
+.section-head p{margin:0;color:var(--muted);max-width:40ch}
+.stand{padding:clamp(30px,5vw,60px) 0 clamp(60px,8vw,100px)}
+.issues{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,3vw,40px) clamp(18px,2.6vw,32px)}
+.issue{text-decoration:none;display:block;animation:rise .8s both;animation-delay:calc(var(--i)*60ms + 200ms)}
+.issue .cover{transition:transform .45s cubic-bezier(.2,1.3,.4,1),box-shadow .45s}
+.issue:hover .cover{transform:translateY(-8px) rotate(-1deg);box-shadow:0 30px 60px -30px rgba(40,20,40,.55)}
+.issue:hover .cover img{transform:scale(1.06)}
+.issue-meta{display:flex;justify-content:space-between;gap:10px;margin-top:14px;font-size:14px;font-weight:700}
+.issue-meta span:last-child{color:var(--muted);font-weight:600}
+.issue-meta b{color:var(--accent)}
+
+/* ---------- COUNTRY page ---------- */
+.opener{background:var(--tint);border-bottom:1px solid var(--line)}
+.opener .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,6vw,80px);align-items:center;padding-block:clamp(40px,6vw,80px)}
+.opener h1{font-size:clamp(50px,8vw,104px);margin:.18em 0 .16em;animation:rise .8s both .1s}
+.role{font-family:var(--hand);font-weight:700;font-size:clamp(26px,2.6vw,34px);line-height:1.1;color:var(--accent);animation:rise .8s both .2s}
+.tag{font-size:clamp(19px,1.7vw,22px);line-height:1.5;max-width:36ch;margin:20px 0 24px;animation:rise .8s both .3s}
+.fact{display:flex;gap:14px;align-items:flex-start;max-width:46ch;background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow);animation:rise .8s both .4s}
+.fact svg{flex:none;width:26px;height:26px;color:var(--accent);margin-top:2px}
+.fact b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.fact span{font-weight:600}
+.opener .cover-wrap{max-width:440px;width:100%;justify-self:center;transform:rotate(2.5deg);animation:toss 1s cubic-bezier(.2,1.2,.3,1) both .2s;--r:2.5deg}
+
+.stories{padding:clamp(50px,7vw,90px) 0 20px}
+.story{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(30px,5vw,70px);align-items:center;margin-bottom:clamp(70px,9vw,120px)}
+.story.flip .pics{order:2}
+.pics{position:relative}
+.pics.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pics.two .ph:nth-child(2){margin-top:44px}
+.ph{position:relative;display:block;width:100%;padding:0;border:0;background:#ddd;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in;transition:transform .45s cubic-bezier(.2,1.3,.4,1)}
+.ph img{width:100%;height:auto;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.pics.two .ph img{aspect-ratio:4/5;object-fit:cover}
+.ph:hover{transform:translateY(-5px) rotate(-.8deg)}
+.ph:hover img{transform:scale(1.05)}
+.ph .zoom{position:absolute;inset-inline-end:12px;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:all .25s}
+.ph:hover .zoom{opacity:1;transform:none}
+.ph .zoom svg{width:18px;height:18px}
+.story-no{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.story-no::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+.story h2{font-size:clamp(30px,3.4vw,44px);margin:12px 0 8px}
+.story .kick{font-family:var(--hand);font-weight:700;font-size:clamp(24px,2.3vw,30px);line-height:1.15;color:var(--accent);margin:0 0 14px}
+.story .tale{margin:0;font-size:18px;line-height:1.7;max-width:46ch}
+
+.soon{padding:0 0 clamp(50px,7vw,80px)}
+.soon h2{font-size:clamp(28px,3.4vw,40px);margin-bottom:8px}
+.soon > p{color:var(--muted);margin:0 0 24px}
+.ideas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.idea{background:var(--card);border-radius:18px;padding:18px 20px;border:1.5px dashed color-mix(in srgb,var(--accent) 40%,var(--line))}
+.idea svg{width:22px;height:22px;color:var(--accent)}
+.idea h3{font-size:19px;letter-spacing:-.01em;margin:10px 0 4px}
+.idea p{margin:0;color:var(--muted);font-size:15px;line-height:1.45}
+
+.quote{background:var(--tint);border-block:1px solid var(--line)}
+.quote .wrap{padding-block:clamp(50px,8vw,100px);display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,3vw,36px);align-items:start}
+.quote .mark{font-family:var(--mast);font-weight:900;font-size:clamp(120px,16vw,200px);line-height:.72;color:var(--accent)}
+.quote blockquote{margin:10px 0 14px;font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.12;letter-spacing:-.02em;max-width:22ch}
+.quote cite{font-style:normal;font-family:var(--hand);font-weight:700;font-size:clamp(24px,2.4vw,30px);color:var(--accent)}
+
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding-block:clamp(40px,6vw,70px)}
+.pager a{display:grid;grid-template-columns:86px 1fr;gap:18px;align-items:center;text-decoration:none;background:var(--card);border-radius:22px;padding:14px;box-shadow:var(--shadow);transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
+.pager a:hover{transform:translateY(-4px)}
+.pager a .cover{border-radius:12px;box-shadow:none}
+.pager small{display:block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pager strong{display:block;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.2vw,26px);line-height:1.1;margin-top:4px}
+.pager .nx{grid-template-columns:1fr 86px;text-align:end}
+.pager .nx .cover{order:2}
+
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer .z{display:flex;gap:8px;align-items:center;font-weight:700;color:var(--ink)}
+footer .z svg{width:18px;height:18px;color:var(--accent)}
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(94vw,1000px);max-height:94vh;overflow:visible}
+dialog.lb::backdrop{background:rgba(25,18,28,.86);backdrop-filter:blur(8px)}
+.lb figure{margin:0;background:#fff;padding:12px 12px 18px;border-radius:22px;animation:pop2 .4s cubic-bezier(.2,1.3,.4,1)}
+@keyframes pop2{from{opacity:0;transform:scale(.92)}}
+.lb img{max-height:74vh;width:auto;margin:0 auto;border-radius:14px}
+.lb figcaption{padding:14px 8px 0;max-width:60ch}
+.lb figcaption strong{display:block;font-family:var(--display);font-size:22px;line-height:1.15}
+.lb figcaption span{font-family:var(--hand);font-weight:700;font-size:24px;color:var(--accent)}
+.lb-btn{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:26px}
+.lb-btn:hover{background:rgba(255,255,255,.28)}
+.lb-prev{left:14px}.lb-next{right:14px}
+.lb-close{position:fixed;top:14px;right:14px;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px}
+
+@media (max-width:900px){
+  .hero,.opener .wrap,.story{grid-template-columns:1fr}
+  .story.flip .pics{order:0}
+  .issues{grid-template-columns:repeat(2,1fr)}
+  .opener .cover-wrap{max-width:360px}
+  .bar .wrap{gap:12px}
+  .logo small{display:none}
+}
+@media (max-width:640px){
+  .bar .wrap{flex-wrap:wrap;height:auto;padding-block:10px}
+  .nav{order:3;width:100%;margin:0}
+  .langs{margin-inline-start:auto}
+  .issues{gap:22px 14px}
+  .pager{grid-template-columns:1fr}
+  .pager .nx{grid-template-columns:86px 1fr;text-align:start}.pager .nx .cover{order:0}
+  .quote .wrap{grid-template-columns:1fr}.quote .mark{font-size:110px;margin-bottom:-30px}
+  .story .tale{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}#sky{display:none}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="bar"><div class="wrap">
+  <a class="logo" href="#" id="logo"></a>
+  <nav class="nav" id="nav" aria-label="Countries"></nav>
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" data-lang="en" lang="en">EN</button>
+    <button type="button" data-lang="fr" lang="fr">FR</button>
+    <button type="button" data-lang="ar" lang="ar">الدارجة</button>
+  </div>
+</div></header>
+<main id="app"></main>
+<footer><div class="wrap" id="foot"></div></footer>
+
+<dialog class="lb" id="lb">
+  <button class="lb-close" id="lbClose">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption><strong id="lbTitle"></strong><span id="lbCap"></span></figcaption></figure>
+  <button class="lb-btn lb-next" id="lbNext">›</button>
+</dialog>
+
+<script>
+const I = n => "img/" + n + ".jpg";
+const WORLDS = [
+ { id:"egypt", country:"Egypt", place:"Giza", title:"Yakut of the Nile", glyph:"☥",
+   role:"Pharaoh of the Two Lands · Destroyer of Sleep Schedules",
+   tag:"Born on 30 June 2026 and already the most powerful ruler in 3,000 years of Egyptian history. Dad has been assigned to the camel.",
+   fact:"Royal decree No. 1: every pyramid now has a changing table.",
+   cover:I("egy-banquet"), coverPos:"22% 50%",
+   sky:{shape:"spark",colors:["#e3a92b","#f0c35a","#45b3c7"],n:55,dir:-1},
+   scenes:[
+    {imgs:[I("egy-banquet")], t:"Baby Cleopatra's Royal Banquet", c:"A forty-course feast. She drank the milk.",
+     story:"The palace cooks worked for three days: roast duck, honey cakes, a mountain of grapes and pomegranates the size of her head. Queen Cleopatra herself came to watch. Yakut looked at the whole table, grabbed her bottle and stuck her tongue out at the duck. The guests screamed with joy. The cooks went for a lie-down."},
+    {imgs:["img/egypt-portrait-2.jpg"], t:"The Official Royal Portrait", c:"Ankh in one hand, tongue out. A pose for the history books.",
+     story:"The royal painter asked for “regal and serious.” Yakut gave him “tongue out and wiggly.” He painted it anyway, because you don't argue with a pharaoh. It now hangs in every pyramid, and Dad has to bow to it every morning."},
+    {imgs:["img/egypt-throne.jpg"], t:"Same Pose, Different Rank", c:"Dad thinks he's the pharaoh here. He's the chair.",
+     story:"Dad practised his “thoughtful pharaoh” pose for an hour. Yakut copied it in two seconds and did it better. The court artist only painted her. Dad has filed a complaint with the Ministry of Thrones. It is being reviewed by Yakut."},
+    {imgs:["img/egypt-camel.jpg"], t:"Arrival at Giza", c:"Sunglasses on. Pyramids rated 6/10.",
+     story:"After a long camel ride she put on her royal sunglasses, looked up at the Great Pyramid and frowned. “Too pointy. No changing table. Six out of ten.” The camel agreed, mostly so it could go home."},
+    {imgs:["img/egypt-scroll.jpg"], t:"Reviewing the Royal Budget", c:"Dad's allowance: DENIED.",
+     story:"Every month the royal treasurer brings her the budget scroll. Line 14, Dad's allowance: denied. Line 15, more milk: approved. Line 16, a nap for Dad: she laughed for a full minute."},
+    {imgs:["img/egypt-lounge.jpg"], t:"Peel My Grapes, Peasant", c:"The cat is her only trusted advisor.",
+     story:"Lunch was served on a golden couch: grapes, a golden cup and one royal cat. The cat is allowed to stay because it also naps eighteen hours a day. They understand each other."},
+    {imgs:["img/egypt-portrait-1.jpg"], t:"Royal Portrait, Take Two", c:"Asked to smile. Stuck her tongue out instead.",
+     story:"Take two was supposed to fix take one. The photographer said “big smile!” She held her tiny ankh, stared straight into the lens and did the tongue again. Take two is now the official version. There will be no take three."},
+    {imgs:[I("dad-egy"),I("dad-egy2")], t:"Karim Joins the Dynasty", c:"Real Dad, real pharaoh outfit. Same royal tongue.",
+     story:"Karim, the real Dad, finally got his own pharaoh costume and posed in front of the pyramids, smiling like he was in charge. He was not. Look closely: she is already doing the royal tongue. The pyramids have seen 4,500 years of history, and this is their favorite photo."},
+    {t:"Pyramid Inspection", c:"Inspecting the pyramids like she owns them. Because she does."},
+    {t:"The Throne of 500 Servants", c:"Five hundred servants. All five hundred on diaper duty."},
+    {t:"Charge of the Tiny Chariot", c:"Rode into battle at 3 km/h. The enemy surrendered from cuteness."},
+    {t:"Ramses on Babysitting Duty", c:"Defeated the Hittites. Defeated by one burp. 💀"},
+    {t:"The Mummy Swaddle", c:"Tightest swaddle in 3,000 years."}
+   ]},
+ { id:"morocco", country:"Morocco", place:"Marrakech", title:"Lalla Yakut", glyph:"❖",
+   role:"Princess of the Kasbah · Queen of Mint Tea",
+   tag:"Crossed the Sahara by camel. Made the camel carry the stroller too.",
+   fact:"Every carpet in the souk was unrolled for her. She napped on all of them.",
+   cover:I("mor-tea"), coverPos:"50% 30%",
+   sky:{shape:"spark",colors:["#e07a3a","#2a9d8f","#f4b942"],n:50,dir:-1},
+   scenes:[
+    {imgs:[I("mor-tea"),I("mor-pour")], t:"The Mint Tea Ceremony", c:"Poured from a meter high. She wanted to do it herself.",
+     story:"Moroccan mint tea is poured from way up high so it gets nice and foamy. Dad practised for a week, poured it perfectly and waited for applause. Then Yakut grabbed the teapot, poured it all over the tray and looked extremely proud of herself. Five-star service, according to her."},
+    {imgs:[I("mor-desert"),I("mor-camel")], t:"Riding Into the Sahara", c:"The camel has asked for a raise.",
+     story:"They wrapped up in blue like the desert travelers and rode into the dunes. The camel carried Dad, the water, the snacks, the stroller and four bags of baby clothes. Yakut carried nothing and complained the most. The camel is now in talks with its union."},
+    {imgs:[I("mor-souk"),I("mor-souk2")], t:"Shopping the Souk", c:"Haggled everything down to free, just by staring.",
+     story:"In the Marrakech souk you have to bargain. Dad offered 100. The shopkeeper said 300. Then Yakut, in her little red fez, just looked at him. Silence. He gave her the lantern for free, plus a rug, plus a hug. Dad still paid 100 somehow."},
+    {imgs:[I("mor-riad2"),I("mor-riad")], t:"Princess of the Riad", c:"Fountain, orange trees, tiles, and one very important nap.",
+     story:"A riad is a house with a secret garden in the middle. Theirs had a fountain, mosaic tiles and orange trees. She inspected the fountain, approved the tiles and fell asleep on Dad within four minutes. Dad didn't move for three hours. He calls it the best and worst afternoon of his life."},
+    {imgs:[I("mor-koutoubia"),I("mor-arch")], t:"Marrakech Postcard", c:"Smiled for the camera, then tried to eat Dad's glasses.",
+     story:"Behind them is the Koutoubia, the most famous tower in Marrakech. Dad wanted one nice postcard photo. She waved at the tourists, blew a raspberry at the pigeons and tried to eat his glasses. These are the only two photos where everyone was looking the right way."},
+    {imgs:[I("mor-coast")], t:"Sea Breeze in Essaouira", c:"The wind took Dad's fez twice.",
+     story:"Next stop: the seaside town of Essaouira, with white houses and old stone walls by the ocean. The wind blew Dad's fez off twice. The seagulls wanted her snacks. She shouted at them in baby language and they flew away. The seagulls have not been back."},
+    {imgs:[I("mor-hamam")], t:"Hammam Day", c:"Steam, rose petals and one very splashy princess.",
+     story:"The hammam is a steamy Moroccan bath. Dad wanted to relax. Yakut wanted to splash. Guess who won. Dad left with rose petals in his hair and the cleanest glasses in North Africa."},
+    {t:"Dad on Tagine Duty", c:"Six hours of slow cooking. She had milk."},
+    {t:"Magic Carpet Ride", c:"Bought one carpet in Marrakech. It is now her private jet."}
+   ]},
+ { id:"rome", country:"Italy", place:"Rome", title:"Yakut Caesar", glyph:"SPQR",
+   role:"Emperor of Rome · Conqueror of Nap Time",
+   tag:"She came. She saw. She spit up on the Senate.",
+   fact:"SPQR now officially stands for Small Princess, Quite Royal.",
+   cover:I("rome-senate"), coverPos:"35% 40%",
+   sky:{shape:"leaf",colors:["#6f8a3a","#8da64a","#b8a040"],n:28,dir:1},
+   scenes:[
+    {imgs:[I("rome-senate")], t:"Addressing the Senate", c:"A four-second speech. Every senator voted yes.",
+     story:"Three hundred senators in white togas gathered to hear the new emperor speak. She raised one tiny hand, stuck out her tongue and said “ba.” The vote was 300 to 0. Nobody knows what they voted for. It is now the law."},
+    {imgs:[I("rome-colosseum")], t:"Triumph at the Colosseum", c:"Fifty thousand fans. She's asleep.",
+     story:"Fifty thousand Romans packed the Colosseum to cheer for their emperor. Rose petals fell from the sky, trumpets blew, the crowd went wild. She slept through the whole thing on a red velvet bed. Historians call it the most relaxed triumph in Roman history."},
+    {imgs:[I("rome-crown")], t:"Laurel Crown Fitting", c:"Two royal tailors. Zero cooperation.",
+     story:"Putting a laurel crown on a baby is harder than conquering Gaul. Two of the empire's best tailors tried. She gave them her angriest eyebrow. They both apologized and offered her a snack. The crown stayed on, mostly because she allowed it."},
+    {imgs:[I("rome-chariot")], t:"The Chariot Race", c:"Top speed: 3 km/h. Still won.",
+     story:"The great chariot race of Rome, with the fastest horses and the bravest drivers. She took the reins, frowned at the track, and the other chariots simply stopped to let her pass. Her horse said it had never felt so much pressure in its life."},
+    {imgs:[I("rome-ettu")], t:"Et Tu, Daddy?", c:"He woke her from a nap. Rome will never forget.",
+     story:"Dad leaned in to give her one tiny kiss during nap time. Big mistake. She woke up, looked at him like he'd betrayed the entire empire, and screamed loud enough to be heard in Greece. The senators wrote it all down. It's in the history books now."},
+    {imgs:[I("rome-bath")], t:"Bath Time at the Roman Baths", c:"They built an aqueduct for one bath. Worth it.",
+     story:"The Romans built miles of aqueducts to bring water into the city. All for this moment: one golden tub, a mountain of bubbles and an emperor with her tongue out. She splashed the palace guards. They thanked her."},
+    {t:"Thumbs Up or Thumbs Down?", c:"The gladiators await her verdict. She's busy sucking the thumb."}
+   ]},
+ { id:"ottoman", country:"Türkiye", place:"Istanbul", title:"Sultana Yakut", glyph:"❀",
+   role:"Sultana of the Seven Hills · Keeper of the Lokum",
+   tag:"Every tulip in Istanbul was planted in her honor. She tried to eat one.",
+   fact:"Yakut means ruby in Turkish. The palace treasury now has a second one.",
+   cover:I("ott-court"), coverPos:"45% 30%",
+   sky:{shape:"petal",colors:["#b8312a","#d9534f","#1d6f8a","#e8a33d"],n:34,dir:1},
+   scenes:[
+    {imgs:[I("ott-court")], t:"Holding Court at Topkapı", c:"The viziers bring problems. She brings a burp.",
+     story:"Every morning the whole palace lines up to tell the Sultana about the empire's problems: taxes, borders, a missing camel. She listens carefully, raises one royal hand, and burps. Problem solved. The viziers don't understand how, but it works every time."},
+    {imgs:[I("ott-lokum")], t:"The Royal Lokum Tasting", c:"Forty flavors of Turkish delight. She fell asleep.",
+     story:"The palace sweet makers brought their finest lokum: rose, pistachio, lemon, a whole silver tray of it. They waited nervously. She looked at it, sighed, and fell asleep with her hand on her cheek. The sweet makers took it as a compliment. Dad ate the entire tray."},
+    {imgs:[I("ott-vizier")], t:"The Grand Vizier (Dad)", c:"Promoted to Grand Vizier. In charge of the bottle.",
+     story:"Dad got a giant turban, a velvet robe and the most important job in the empire: holding the royal bottle. He takes it very seriously. She takes him less seriously. Look at that face. That is a boss reviewing an employee."},
+    {imgs:[I("ott-bosphorus")], t:"Bosphorus Boat Parade", c:"Two continents. One nap.",
+     story:"Istanbul sits on two continents, Europe and Asia, with the Bosphorus in the middle. She sailed it at sunset on a golden boat, wrapped in fur, past the mosques and the ferries. She is now the only baby to have napped on two continents in one afternoon."},
+    {imgs:[I("ott-hamam")], t:"Hamam Spa Day", c:"Marble, bubbles, rose petals. Very loud opinions.",
+     story:"The Turkish hamam is all warm marble and steam. The attendants prepared rose petals, golden bowls and fluffy towels. She added bubbles to the ceiling, the floor and one attendant's face. Rating: five stars and three splashes."},
+    {imgs:[I("ott-band")], t:"The Royal Lullaby Band", c:"The loudest band in history, playing very quietly.",
+     story:"The Ottoman military band was famous for being so loud that enemies ran away. Tonight they had one job: play a lullaby. Drums on tiptoe. Trumpets whispering. It took forty-five minutes, but she finally fell asleep. The whole band got medals."}
+   ]},
+ { id:"japan", country:"Japan", place:"Kyoto", title:"Shogun Yakut", glyph:"将軍",
+   role:"Supreme Shogun of All the Islands",
+   tag:"Ten thousand samurai bow before her. She sneezes. They bow again.",
+   fact:"Her katana is a teething ring. Nobody has been brave enough to say so.",
+   cover:I("japan-armor"), coverPos:"35% 30%",
+   sky:{shape:"petal",colors:["#f59ab0","#f27f9b","#ffc2d1"],n:40,dir:1},
+   scenes:[
+    {imgs:[I("japan-armor"),I("japan-fan")], t:"Inspecting the Samurai", c:"One stern look. The entire army apologized.",
+     story:"Ten thousand samurai in full armor stood in front of the castle, waiting for their shogun. She arrived, waved her golden fan once, and every single one of them bowed. Then she stuck out her tongue. They bowed again, just to be safe."},
+    {imgs:[I("japan-sumo2"),I("japan-sumo")], t:"Undefeated in Sumo", c:"The champion entered the ring. The champion left the ring.",
+     story:"The sumo champion is 180 kilos of pure muscle. She crawled into the ring in her tiny belt and gave him one look. He fell flat on his back, then grabbed his head in disbelief. The judges checked the replay five times. Official result: baby wins."},
+    {imgs:[I("japan-blossom"),I("japan-blossom2")], t:"Cherry Blossom Inspection", c:"Every petal, personally approved.",
+     story:"In spring, Japan is covered in pink cherry blossoms, and someone has to check that they're all good enough. That someone is her. She checks each petal very carefully, frowning like a professor. So far: 4 million approved, 2 rejected for being “too pink.”"},
+    {imgs:[I("japan-tea2"),I("japan-tea")], t:"The Tea Ceremony Critic", c:"Three hours of ceremony. She brought her own bottle.",
+     story:"The Japanese tea ceremony is calm, slow and very elegant. The tea master spent three hours preparing the perfect bowl of matcha. She pushed it away with one finger and held up her own bottle. The tea master is taking some time off to think about things."},
+    {imgs:[I("japan-rickshaw"),I("japan-rickshaw2")], t:"Dad Pulls the Rickshaw", c:"Tokyo to Kyoto. No breaks. Her orders.",
+     story:"In the first photo, Dad is pulling the rickshaw through the old streets and regretting every choice in his life. In the second photo, Dad has quietly hired a substitute. She noticed. She did not approve. Dad was back on rickshaw duty within ten minutes."},
+    {imgs:[I("japan-brush2"),I("japan-brush")], t:"A Calligraphy Lesson", c:"She painted “dream.” Dad's dream is sleep.",
+     story:"The calligraphy master taught her to paint 夢, which means “dream.” She painted it beautifully, then painted the table, the paper and her own sleeve. Behind her, Dad holds his head. His dream is the same as always: one full night of sleep."},
+    {imgs:[I("dad-jpn"),I("dad-jpn2")], t:"Karim, Honorary Samurai", c:"The armor is real. The bravery is for photos.",
+     story:"Karim, the real Dad, put on real samurai armor and posed under the cherry blossoms like a mighty warrior. Very brave, very strong, very proud. Then she pulled his ear, and the mighty warrior made a noise no samurai should ever make. These photos were taken just before that."}
+   ]},
+ { id:"vikings", country:"Norway", place:"The Fjords", title:"Yakut the Fearless", glyph:"⚔",
+   role:"Jarl of the North · Raider of Milk Supplies",
+   tag:"Sailed across the North Sea in a storm. Did not wake up once.",
+   fact:"The sagas will remember her. Dad will remember the 3 a.m. feedings.",
+   cover:I("nor-longship"), coverPos:"50% 30%",
+   sky:{shape:"dot",colors:["#a8d2e2","#7fbcd2","#ffffff"],n:80,dir:1},
+   scenes:[
+    {imgs:[I("nor-longship")], t:"Captain of the Longship", c:"Forty rowers, one tiny captain, zero mercy.",
+     story:"She stood at the front of the Viking longship with her axe, her shield and her horned helmet while the fjords rolled past. The forty rowers behind her rowed faster than they ever had. Not because of the wind. Because she was watching."},
+    {imgs:[I("nor-axe")], t:"Armed and Adorable", c:"The axe is real. So is the tongue.",
+     story:"The Vikings gave her an axe, a shield and a red cape and said “now look fierce.” She looked fierce for exactly one second, then stuck out her tongue. The whole village laughed. She has been named the most dangerous Viking in Norway, for reasons nobody can explain."},
+    {imgs:[I("nor-horn")], t:"Feast in the Great Hall", c:"The warriors drank mead. She drank milk, from a horn.",
+     story:"The feast hall was full of roast meat, loud songs and warriors banging on the tables. Everyone drank from horns, so she did too. Hers was full of warm milk. She finished first and banged the horn on the table. The warriors cheered. Dad asked for a napkin."},
+    {imgs:[I("nor-aurora")], t:"Under the Northern Lights", c:"The whole sky put on a show. She preferred the puppy.",
+     story:"They waited all night in the snow to see the northern lights. Finally the sky turned green and danced over the mountains. Dad cried a little. She didn't even look up, because she had found a fluffy husky puppy. Honestly, fair."},
+    {imgs:[I("nor-bunad")], t:"Norway's National Day", c:"Flower crown, a flag, and no idea what's going on.",
+     story:"On Norway's national day everyone wears a bunad, the traditional dress, and waves little flags. She wore the full outfit with a crown of flowers and waved her flag like a pro. Then she tried to eat the flag. The parade continued without asking questions."},
+    {imgs:[I("dad-nor"),I("dad-nor2")], t:"Karim Joins the Raid", c:"Real Dad in real furs. No idea what he signed up for.",
+     story:"Karim, the real Dad, joined the Viking crew, put on the furs and smiled for the camera like he was having the time of his life. Then the captain told him he was rowing. All forty seats. He is still rowing. Please send snacks."},
+    {t:"Raiding the Milk Stores", c:"Every village fridge in Scandinavia, plundered."},
+    {t:"Dad Braids Her One Hair", c:"Four hours of work. A legendary result."},
+    {t:"Naming the Longship", c:"She named it Burp. The crew is honored."}
+   ]},
+ { id:"versailles", country:"France", place:"Versailles & Paris", title:"Her Majesty Yakut", glyph:"⚜",
+   role:"Queen of Versailles · Patron of the Purée",
+   tag:"Let them eat purée.",
+   fact:"The palace has 2,300 rooms. She only cares about the one with snacks.",
+   cover:I("fra-throne"), coverPos:"50% 30%",
+   sky:{shape:"petal",colors:["#f4b6c2","#f9d3da","#c9a55a"],n:30,dir:1},
+   scenes:[
+    {imgs:[I("fra-throne")], t:"The Throne Room", c:"Chandeliers, gold chairs and a wig full of roses.",
+     story:"Versailles has gold everywhere: walls, chairs, ceilings, even the doorknobs. She sat on the biggest gold chair, held her lace fan and gave the court a royal tongue. Three duchesses fainted from cuteness. The fourth asked for an autograph."},
+    {imgs:[I("fra-fan")], t:"Arrival at Versailles", c:"2,300 rooms. She wants the one with snacks.",
+     story:"She arrived at the palace in a powder-blue gown with flowers in her hair and looked up at 2,300 rooms of royal French fanciness. The guards bowed. The gardeners bowed. Her only question: which room has the snacks?"},
+    {imgs:[I("fra-tiara")], t:"The Royal Nap Garden", c:"Supposed to nap. Posed instead.",
+     story:"The gardens of Versailles are enormous, with fountains, flowers and perfect hedges, all designed for royal relaxing. Dad found her a quiet spot for a nap. She put on her tiara and posed for photos for forty minutes instead. Dad napped. Nobody tell her."},
+    {imgs:[I("fra-cafe")], t:"Café in Paris", c:"Beret, croissant, tiny cup. Very French.",
+     story:"Next stop: a little café near the Eiffel Tower. Red beret, striped shirt, croissant, tiny cup. She looked more Parisian than the Parisians. When the waiter asked what she'd like, she knocked her cup over and pointed at Dad's croissant. Very French indeed."},
+    {imgs:[I("fra-chef")], t:"The Macaron Inspector", c:"Licked one macaron. Approved all 400.",
+     story:"Paris has the best pastry chefs in the world, so they made her an honorary one. She inspected a whole tower of pink, yellow and chocolate macarons and licked exactly one. Approved. The shop has put her photo in the window."},
+    {imgs:[I("dad-fra"),I("dad-fra2")], t:"A Wig Taller Than Dad", c:"A mountain of powdered curls. She has no idea.",
+     story:"Karim, the real Dad, got a fancy royal French jacket and stood next to her for the official portrait. That's when everyone noticed her wig is basically taller than he is. The royal painter called it “a very balanced composition.” Dad said nothing. He knows his place."},
+    {t:"Let Them Eat Purée", c:"Royal decree: carrots for everyone. Mashed."},
+    {t:"The Hall of Mirrors", c:"She found the other baby in the mirror. They are now rivals."},
+    {t:"The Baguette Scepter", c:"Rules all of France with a baguette. Also chews on it."}
+   ]},
+ { id:"west", country:"USA", place:"Texas to New York", title:"Sheriff Yakut", glyph:"★",
+   role:"Fastest Bottle in the West · Pride of America",
+   tag:"This town ain't big enough for the both of us. She needs the whole crib.",
+   fact:"Wanted: dead tired or alive. Reward: one clean diaper.",
+   cover:I("usa-wanted"), coverPos:"40% 30%",
+   sky:{shape:"dust",colors:["#b98a55","#d8b383","#8a5a33"],n:45,dir:0},
+   scenes:[
+    {imgs:[I("usa-wanted")], t:"WANTED", c:"For stealing hearts and Dad's sleep.",
+     story:"The posters went up all over town: WANTED, for stealing hearts, stealing Dad's sleep and stealing the last cookie. The sheriff was sent to catch the outlaw. One problem: the outlaw is the sheriff. She waved at the poster and rode off on her pony. Case closed."},
+    {imgs:[I("usa-cowboy")], t:"The Sheriff Takes Office", c:"Shiny badge, tiny boots, zero tolerance for being put down.",
+     story:"Her first day as sheriff. She got a hat, a vest, a red bandana and two shiny stars, just to be sure. New law No. 1: nobody is allowed to put her down. New law No. 2: Dad must do the voices when reading stories. The town has never been safer."},
+    {imgs:[I("usa-liberty"),I("usa-liberty2")], t:"Lady Liberty, Tiny Edition", c:"The statue is 93 meters tall. She is more famous.",
+     story:"A quick trip to New York to visit the Statue of Liberty. She showed up with her own torch, her own crown and her own book. Tourists didn't know which one to photograph. The real statue has stood there since 1886 and has never been this jealous."},
+    {imgs:[I("usa-pilot")], t:"Top Baby", c:"Goggles on, scarf flying, zero flying lessons.",
+     story:"She put on the leather helmet and goggles and climbed into an old stars-and-stripes airplane. Flying lessons? No. Pilot's license? Absolutely not. She grabbed the controls and said “ba!” Air traffic control cleared the whole sky, just in case."},
+    {imgs:[I("dad-usa"),I("dad-usa2")], t:"Karim Joins the Posse", c:"Top hat in New York, cowboy hat in Texas. Same proud grin.",
+     story:"Karim, the real Dad, couldn't choose between New York and Texas, so he did both: a giant stars-and-stripes top hat by the Statue of Liberty, and a cowboy hat in the Wild West. She wore a matching outfit both times, because she is a professional. Dad still wears the hat at home."},
+    {t:"Saloon Order", c:"One warm milk. Straight. Leave the bottle."},
+    {t:"Showdown at High Nap", c:"High noon. Ten paces. Dad blinked first."},
+    {t:"Gold Rush", c:"Struck gold on day one. Immediately tried to eat it."}
+   ]},
+ { id:"mexico", country:"Mexico", place:"Mexico City", title:"La Pequeña Yakut", glyph:"✦",
+   role:"Queen of the Fiesta · Lucha Libre Champion",
+   tag:"Born on 30 June 2026. Undefeated. The mask stays on.",
+   fact:"Signature move: the Baby Headlock. Nobody has ever escaped it.",
+   cover:I("mex-fiesta"), coverPos:"40% 25%",
+   sky:{shape:"rect",colors:["#ff3d8b","#ffd23f","#19d3c5","#8b5cf6","#ff7a29"],n:60,dir:1},
+   scenes:[
+    {imgs:[I("mex-fiesta")], t:"Fiesta in Mexico City", c:"Mariachis, tacos, a pyramid and one tiny señorita.",
+     story:"Dad wore the full mariachi suit with gold buttons and a giant sombrero. She wore roses in her hair and a lace dress. The mariachis played, the tacos arrived, and the great pyramid of Chichén Itzá watched proudly. She danced so hard she fell asleep in the guacamole. Best fiesta ever."},
+    {t:"Entrance of the Champion", c:"Smoke, lights, fireworks. She arrives by stroller."},
+    {t:"Dad Taps Out", c:"The famous Baby Headlock. Dad lasted two seconds."},
+    {t:"Piñata Destroyer", c:"One swing. Candy everywhere. (Dad did the swing.)"},
+    {t:"Championship Belt Ceremony", c:"The belt is bigger than she is. She is using it as a blanket."}
+   ]},
+ { id:"spain", country:"Spain", place:"Seville", title:"La Flamenca Yakut", glyph:"❁",
+   role:"Queen of Flamenco · World Champion Fan Waver",
+   tag:"She clapped once. The whole of Seville started dancing.",
+   fact:"Spain has a national nap called the siesta. She has been training for this her whole life.",
+   cover:I("esp-sevilla"), coverPos:"45% 30%",
+   sky:{shape:"petal",colors:["#d7263d","#f5b700","#ff7a7a"],n:32,dir:1},
+   scenes:[
+    {imgs:[I("esp-sevilla")], t:"¡Olé in Seville!", c:"Red ruffles, a fan, and Dad in a very serious hat.",
+     story:"In Seville, Dad put on his flat black flamenco hat and she wore a red ruffled dress with roses in her hair. The guitars started, the dancers stomped, and she waved her fan like she'd been doing it for years. Then she yelled “OLÉ!” It sounded more like “BLEH!” The crowd went wild anyway."},
+    {t:"Flamenco Night", c:"One stomp. Standing ovation."},
+    {t:"The Paella Taste Test", c:"A pan of paella the size of a car. She ate one grain of rice."},
+    {t:"Siesta Champion", c:"Spain's national nap. She did four hours."},
+    {t:"Guitar Lessons with Dad", c:"Dad played one chord. She cried. Lesson over."}
+   ]},
+ { id:"india", country:"India", place:"Jaipur", title:"Maharani Yakut", glyph:"✹",
+   role:"Maharani of the Pink City · Queen of Colors",
+   tag:"She arrived in Jaipur and the elephants lined up to say hello.",
+   fact:"The Holi festival was moved to today. She asked nicely.",
+   cover:I("ind-jaipur"), coverPos:"32% 40%",
+   sky:{shape:"petal",colors:["#f4a300","#ff7a00","#e0457b"],n:36,dir:1},
+   scenes:[
+    {imgs:[I("ind-jaipur")], t:"Namaste from India!", c:"Gold, jewels, elephants and a very colorful Dad.",
+     story:"Dad wore a golden sherwani and a velvet scarf. She wore a jeweled headpiece and a red outfit that sparkled from across the street. They saw the Taj Mahal, waved at a decorated elephant and got caught in a cloud of Holi colors. Dad turned pink, green and blue. She stayed perfectly spotless. Nobody knows how."},
+    {t:"The Elephant Parade", c:"Ten elephants lined up. She waved. They bowed."},
+    {t:"Taj Mahal Day Trip", c:"One of the wonders of the world. She wondered where her bottle was."},
+    {t:"Bollywood Debut", c:"One dance move. Box office record."},
+    {t:"Houseboat Nap in Kerala", c:"Floating, palm trees, and a four-hour nap."}
+   ]},
+ { id:"home-sweet-home", country:"Home", place:"Home", title:"Home Sweet Home", glyph:"♡",
+   role:"The Final Stop · Her Favorite Place on Earth",
+   tag:"After eleven countries, the best place on the whole tour was right here.",
+   fact:"Breaking news: Dad has finally been allowed to sit down.",
+   cover:I("dad-home"), coverPos:"62% 40%",
+   sky:{shape:"bubble",colors:["#ff8fb1","#6fb8ff","#5fd3b4","#b28dff","#ffc24d"],n:24,dir:-1},
+   scenes:[
+    {imgs:[I("dad-home"),I("dad-home2")], t:"Back Home with Dad", c:"After the whole world, her favorite place is Dad's arms.",
+     story:"Eleven countries, more costumes than Dad owns, one complaint from the camel union and zero naps skipped. Then they came home, put on comfy clothes, grabbed the teddy and took a real photo together. No crowns. No armor. Just Karim, Yakut and a very fluffy bear. (She is still sticking her tongue out. Some things never change.)"}
+   ]}
+];
+const EXTRA = {
+ egypt:{issue:"The Egypt Issue", lines:[["Exclusive","Inside her 500-servant palace"],["Dad speaks","“I haven't slept since the Old Kingdom”"]], sticker:["Camel","rated 6/10"], sub:"Born on 30 June 2026. Already outranks every pharaoh.",
+   quote:"I defeated the Hittites. I cannot defeat bedtime.", by:"Karim, as Ramses the Exhausted"},
+ morocco:{issue:"The Morocco Issue", lines:[["Desert news","Camel demands a raise"],["Souk report","Merchants give up haggling"]], sticker:["Mint tea","5 stars"], sub:"Princess of the Kasbah. Queen of mint tea.",
+   quote:"I carried her stroller across the entire Sahara. The camel carried nothing.", by:"Karim, Head of Luggage"},
+ rome:{issue:"The Rome Issue", lines:[["Breaking","Senate votes 300–0 for more naps"],["Gladiators","“She scares us”"]], sticker:["Laurel","the new bonnet"], sub:"She came. She saw. She spit up on the Senate.",
+   quote:"Et tu, Yakut? Every single night at 3 a.m.?", by:"Karim, Senator of Diapers"},
+ ottoman:{issue:"The Istanbul Issue", lines:[["Palace life","Topkapı's most powerful resident was born on 30 June 2026"],["Taste test","Nothing beats milk"]], sticker:["Yakut","means ruby"], sub:"Every tulip in Istanbul, planted in her honor.",
+   quote:"I was promised a palace. I got a diaper bag. In silk.", by:"Karim, Grand Vizier"},
+ japan:{issue:"The Japan Issue", lines:[["Shogun watch","10,000 samurai, one nap schedule"],["Sumo shock","Champion defeated by baby"]], sticker:["Tea","3 hrs, 0 sips"], sub:"Ten thousand samurai bow. She sneezes. They bow again.",
+   quote:"I have pulled this rickshaw across all of Japan. She slept the whole way.", by:"Karim, Rickshaw Department"},
+ vikings:{issue:"The Norway Issue", lines:[["Sea legend","Captain sleeps through the North Sea"],["The great","Milk raid of 2026"]], sticker:["Puppy","found"], sub:"Jarl of the North. Raider of milk supplies.",
+   quote:"I have sailed through storms. Nothing is louder than her at 3 a.m.", by:"Karim, Chief Oarsman"},
+ versailles:{issue:"The France Issue", lines:[["The decree","Let them eat purée"],["Paris","Macarons: 400 approved"]], sticker:["Wig","taller than Dad"], sub:"2,300 rooms in the palace. All of them obsessed with her.",
+   quote:"I hold the parasol. I do not ask questions.", by:"Karim, Royal Footman"},
+ west:{issue:"The USA Issue", lines:[["Most wanted","For stealing hearts and sleep"],["New York","Lady Liberty gets a tiny rival"]], sticker:["Reward","1 clean diaper"], sub:"Fastest bottle in the West.",
+   quote:"This town ain't big enough for the both of us. She got the crib. I got the floor.", by:"Karim, Deputy Sheriff"},
+ mexico:{issue:"The Mexico Issue", lines:[["Fiesta","Fell asleep in the guacamole"],["Ringside","Dad taps out in 2 seconds"]], sticker:["Campeona","mundial"], sub:"La Pequeña Yakut. The mask stays on.",
+   quote:"I wore a sombrero the size of a table. She still got more photos.", by:"Karim, Head Mariachi"},
+ spain:{issue:"The Spain Issue", lines:[["Flamenco","One clap, whole city dances"],["Siesta","New record: 4 hours"]], sticker:["Olé","x 1000"], sub:"Queen of flamenco. Champion of the siesta.",
+   quote:"I learned flamenco for her. She fell asleep at the first stomp.", by:"Karim, Backup Dancer"},
+ india:{issue:"The India Issue", lines:[["Holi report","Dad turned three colors"],["Jaipur","Elephants request autographs"]], sticker:["Namaste","ji"], sub:"Maharani of the Pink City.",
+   quote:"I was blue, pink and green for a week. She didn't get a single speck.", by:"Karim, Human Rainbow"},
+ "home-sweet-home":{issue:"The Home Issue", lines:[["Exclusive","Dad finally sits down"],["Revealed","Her favorite place on Earth"]], sticker:["Teddy","approved"], sub:"After the whole world, the best place is Dad's arms.",
+   quote:"Eleven countries. Sixty outfits. The best trip of my life. Can I sleep now?", by:"Karim (Dad)"}
+};
+WORLDS.forEach(w=>Object.assign(w,EXTRA[w.id]));
+
+
+const FR = {
+ egypt:{country:"Égypte", place:"Gizeh", title:"Yakut du Nil", role:"Pharaonne des Deux Terres · Destructrice des heures de sommeil",
+  tag:"Née le 30 juin 2026 et déjà la reine la plus puissante de 3 000 ans d’histoire égyptienne. Papa a été affecté au chameau.",
+  fact:"Décret royal n° 1 : chaque pyramide aura désormais une table à langer.",
+  issue:"Le numéro Égypte", lines:[["Exclusif","Dans son palais aux 500 serviteurs"],["Papa parle","« Je n'ai pas dormi depuis l'Ancien Empire »"]], sticker:["Chameau","noté 6/10"], sub:"Née le 30 juin 2026. Elle commande déjà tous les pharaons.",
+  quote:"J'ai vaincu les Hittites. Je n'arrive pas à vaincre l'heure du coucher.", by:"Karim, alias Ramsès l'Épuisé",
+  scenes:[
+   {t:"Le banquet royal de Bébé Cléopâtre", c:"Un festin de quarante plats. Elle a bu son lait.", story:"Les cuisiniers du palais ont travaillé trois jours : canard rôti, gâteaux au miel, une montagne de raisins et des grenades grosses comme sa tête. La reine Cléopâtre elle-même est venue voir. Yakut a regardé toute la table, attrapé son biberon et tiré la langue au canard. Les invités ont hurlé de joie. Les cuisiniers sont partis s'allonger."},
+   {t:"Le portrait royal officiel", c:"Un ankh dans la main, la langue tirée. Une pose pour l'Histoire.", story:"Le peintre royal voulait « noble et sérieux ». Yakut lui a offert « langue tirée et gigotage ». Il l'a peinte quand même, parce qu'on ne discute pas avec une pharaonne. Le tableau est accroché dans toutes les pyramides, et Papa doit s'incliner devant lui chaque matin."},
+   {t:"Même pose, autre grade", c:"Papa se croit pharaon ici. En fait, c'est le fauteuil.", story:"Papa a répété sa pose de « pharaon pensif » pendant une heure. Yakut l'a copiée en deux secondes, en mieux. Le peintre de la cour ne l'a peinte qu'elle. Papa a porté plainte auprès du ministère des Trônes. La plainte est examinée par Yakut."},
+   {t:"Arrivée à Gizeh", c:"Lunettes de soleil. Pyramides notées 6/10.", story:"Après une longue balade à dos de chameau, elle a mis ses lunettes royales, levé les yeux vers la Grande Pyramide et froncé les sourcils. « Trop pointue. Pas de table à langer. Six sur dix. » Le chameau était d'accord, surtout pour pouvoir rentrer."},
+   {t:"Le budget royal", c:"L'argent de poche de Papa : REFUSÉ.", story:"Chaque mois, le trésorier royal lui apporte le papyrus du budget. Ligne 14, l'argent de poche de Papa : refusé. Ligne 15, plus de lait : accepté. Ligne 16, une sieste pour Papa : elle a ri pendant une minute entière."},
+   {t:"Épluche mes raisins, manant", c:"Le chat est son seul conseiller de confiance.", story:"Le déjeuner était servi sur un divan doré : du raisin, une coupe en or et un chat royal. Le chat a le droit de rester parce qu'il fait aussi la sieste dix-huit heures par jour. Ils se comprennent."},
+   {t:"Portrait royal, deuxième prise", c:"On lui a demandé de sourire. Elle a tiré la langue.", story:"La deuxième prise devait corriger la première. Le photographe a dit « grand sourire ! ». Elle a tenu son petit ankh, regardé l'objectif droit dans les yeux et refait la langue. La deuxième prise est devenue la version officielle. Il n'y aura pas de troisième prise."},
+   {t:"Karim rejoint la dynastie", c:"Le vrai Papa, un vrai costume de pharaon. La même langue royale.", story:"Karim, le vrai Papa, a enfin eu son propre costume de pharaon et a posé devant les pyramides en souriant comme s'il était le chef. Il ne l'est pas. Regardez bien : elle fait déjà la langue royale. Les pyramides ont vu 4 500 ans d'histoire, et c'est leur photo préférée."},
+   {t:"Inspection des pyramides", c:"Elle inspecte les pyramides comme si elles étaient à elle. Elles le sont."},
+   {t:"Le trône aux 500 serviteurs", c:"Cinq cents serviteurs. Tous de corvée de couches."},
+   {t:"La charge du mini-char", c:"Partie au combat à 3 km/h. L'ennemi s'est rendu, trop mignon."},
+   {t:"Ramsès fait du baby-sitting", c:"A vaincu les Hittites. Vaincu par un rot. 💀"},
+   {t:"L'emmaillotage momie", c:"L'emmaillotage le plus serré depuis 3 000 ans."}
+  ]},
+ morocco:{country:"Maroc", place:"Marrakech", title:"Lalla Yakut", role:"Princesse de la Kasbah · Reine du thé à la menthe",
+  tag:"Elle a traversé le Sahara à dos de chameau. Et le chameau a dû porter la poussette aussi.",
+  fact:"Tous les tapis du souk ont été déroulés pour elle. Elle a fait la sieste sur chacun.",
+  issue:"Le numéro Maroc", lines:[["Désert","Le chameau exige une augmentation"],["Souk","Les marchands abandonnent le marchandage"]], sticker:["Thé","5 étoiles"], sub:"Princesse de la Kasbah. Reine du thé à la menthe.",
+  quote:"J'ai porté sa poussette à travers tout le Sahara. Le chameau n'a rien porté.", by:"Karim, chef des bagages",
+  scenes:[
+   {t:"La cérémonie du thé", c:"Versé d'un mètre de haut. Elle voulait le faire elle-même.", story:"Au Maroc, on verse le thé à la menthe de très haut pour qu'il mousse bien. Papa s'est entraîné pendant une semaine, l'a versé parfaitement et a attendu les applaudissements. Puis Yakut a attrapé la théière, en a renversé partout sur le plateau et a eu l'air extrêmement fière d'elle. Service cinq étoiles, d'après elle."},
+   {t:"En route pour le Sahara", c:"Le chameau a demandé une augmentation.", story:"Ils se sont enroulés dans du bleu comme les voyageurs du désert et sont partis dans les dunes. Le chameau portait Papa, l'eau, le goûter, la poussette et quatre sacs de vêtements de bébé. Yakut ne portait rien et c'est elle qui se plaignait le plus. Le chameau est en négociation avec son syndicat."},
+   {t:"Shopping au souk", c:"Elle a tout négocié jusqu'à gratuit, rien qu'en regardant.", story:"Au souk de Marrakech, il faut marchander. Papa a proposé 100. Le marchand a dit 300. Puis Yakut, avec sa petite chéchia rouge, l'a juste regardé. Silence. Il lui a offert la lanterne, plus un tapis, plus un câlin. Papa a quand même payé 100, on ne sait pas comment."},
+   {t:"Princesse du riad", c:"Fontaine, orangers, zelliges et une sieste très importante.", story:"Un riad, c'est une maison avec un jardin secret au milieu. Le leur avait une fontaine, des zelliges et des orangers. Elle a inspecté la fontaine, validé les zelliges et s'est endormie sur Papa en quatre minutes. Papa n'a pas bougé pendant trois heures. Il dit que c'était le meilleur et le pire après-midi de sa vie."},
+   {t:"Carte postale de Marrakech", c:"Elle a souri pour la photo, puis a voulu manger les lunettes de Papa.", story:"Derrière eux, la Koutoubia, la tour la plus célèbre de Marrakech. Papa voulait une jolie photo carte postale. Elle a salué les touristes, fait des bruits de bouche aux pigeons et essayé de manger ses lunettes. Ce sont les deux seules photos où tout le monde regarde dans la bonne direction."},
+   {t:"Brise marine à Essaouira", c:"Le vent a emporté la chéchia de Papa deux fois.", story:"Étape suivante : Essaouira, la ville au bord de l'océan avec ses maisons blanches et ses vieux remparts. Le vent a fait s'envoler la chéchia de Papa deux fois. Les mouettes voulaient son goûter. Elle les a grondées en langage bébé et elles sont parties. Les mouettes ne sont jamais revenues."},
+   {t:"Journée hammam", c:"Vapeur, pétales de rose et une princesse qui éclabousse.", story:"Le hammam, c'est le bain marocain plein de vapeur. Papa voulait se détendre. Yakut voulait éclabousser. Devinez qui a gagné. Papa est reparti avec des pétales de rose dans les cheveux et les lunettes les plus propres d'Afrique du Nord."},
+   {t:"Papa aux fourneaux du tajine", c:"Six heures de cuisson lente. Elle a bu du lait."},
+   {t:"Le tapis volant", c:"Un tapis acheté à Marrakech. C'est maintenant son jet privé."}
+  ]},
+ rome:{country:"Italie", place:"Rome", title:"Yakut César", role:"Impératrice de Rome · Conquérante de la sieste",
+  tag:"Elle est venue. Elle a vu. Elle a régurgité sur le Sénat.",
+  fact:"SPQR veut désormais dire : Sa Petite Princesse Qui Règne.",
+  issue:"Le numéro Rome", lines:[["Dernière minute","Le Sénat vote 300–0 pour plus de siestes"],["Gladiateurs","« Elle nous fait peur »"]], sticker:["Laurier","le nouveau bonnet"], sub:"Elle est venue. Elle a vu. Elle a régurgité sur le Sénat.",
+  quote:"Toi aussi, Yakut ? Toutes les nuits à 3 heures du matin ?", by:"Karim, sénateur des couches",
+  scenes:[
+   {t:"Discours au Sénat", c:"Un discours de quatre secondes. Tous les sénateurs ont voté oui.", story:"Trois cents sénateurs en toge blanche se sont réunis pour écouter la nouvelle impératrice. Elle a levé une toute petite main, tiré la langue et dit « ba ». Le vote : 300 contre 0. Personne ne sait pour quoi ils ont voté. C'est maintenant la loi."},
+   {t:"Triomphe au Colisée", c:"Cinquante mille fans. Elle dort.", story:"Cinquante mille Romains ont rempli le Colisée pour acclamer leur impératrice. Des pétales de rose tombaient du ciel, les trompettes sonnaient, la foule était en délire. Elle a dormi tout du long sur un lit de velours rouge. Les historiens parlent du triomphe le plus détendu de l'histoire romaine."},
+   {t:"Essayage de la couronne", c:"Deux tailleurs royaux. Zéro coopération.", story:"Mettre une couronne de laurier à un bébé, c'est plus dur que conquérir la Gaule. Deux des meilleurs tailleurs de l'empire ont essayé. Elle leur a fait son sourcil le plus furieux. Ils se sont excusés et lui ont proposé un goûter. La couronne est restée, surtout parce qu'elle l'a bien voulu."},
+   {t:"La course de chars", c:"Vitesse max : 3 km/h. Elle a quand même gagné.", story:"La grande course de chars de Rome, avec les chevaux les plus rapides et les cochers les plus courageux. Elle a pris les rênes, froncé les sourcils, et les autres chars se sont simplement arrêtés pour la laisser passer. Son cheval dit n'avoir jamais subi autant de pression."},
+   {t:"Toi aussi, Papa ?", c:"Il l'a réveillée pendant la sieste. Rome n'oubliera jamais.", story:"Papa s'est penché pour lui faire un tout petit bisou pendant la sieste. Grosse erreur. Elle s'est réveillée, l'a regardé comme s'il avait trahi tout l'empire et a crié assez fort pour qu'on l'entende en Grèce. Les sénateurs ont tout noté. C'est dans les livres d'histoire maintenant."},
+   {t:"Le bain aux thermes", c:"Ils ont construit un aqueduc pour un seul bain. Ça valait le coup.", story:"Les Romains ont construit des kilomètres d'aqueducs pour amener l'eau en ville. Tout ça pour ce moment : une baignoire en or, une montagne de mousse et une impératrice qui tire la langue. Elle a éclaboussé les gardes du palais. Ils l'ont remerciée."},
+   {t:"Pouce levé ou pouce baissé ?", c:"Les gladiateurs attendent son verdict. Elle est occupée à sucer son pouce."}
+  ]},
+ ottoman:{country:"Turquie", place:"Istanbul", title:"Sultane Yakut", role:"Sultane des Sept Collines · Gardienne du loukoum",
+  tag:"Toutes les tulipes d'Istanbul ont été plantées en son honneur. Elle a essayé d'en manger une.",
+  fact:"Yakut veut dire rubis en turc. Le trésor du palais en a maintenant deux.",
+  issue:"Le numéro Istanbul", lines:[["Vie de palais","La personne la plus puissante de Topkapı est née le 30 juin 2026"],["Dégustation","Rien ne vaut le lait"]], sticker:["Yakut","veut dire rubis"], sub:"Toutes les tulipes d'Istanbul, plantées en son honneur.",
+  quote:"On m'avait promis un palais. J'ai eu un sac à langer. En soie.", by:"Karim, grand vizir",
+  scenes:[
+   {t:"Audience à Topkapı", c:"Les vizirs apportent des problèmes. Elle apporte un rot.", story:"Chaque matin, tout le palais fait la queue pour raconter à la sultane les problèmes de l'empire : les impôts, les frontières, un chameau disparu. Elle écoute attentivement, lève une main royale… et fait un rot. Problème réglé. Les vizirs ne comprennent pas comment, mais ça marche à chaque fois."},
+   {t:"La dégustation de loukoums", c:"Quarante parfums de loukoum. Elle s'est endormie.", story:"Les confiseurs du palais ont apporté leurs meilleurs loukoums : rose, pistache, citron, tout un plateau d'argent. Ils attendaient, nerveux. Elle a regardé, soupiré, et s'est endormie la main sur la joue. Les confiseurs l'ont pris comme un compliment. Papa a mangé tout le plateau."},
+   {t:"Le grand vizir (Papa)", c:"Promu grand vizir. Responsable du biberon.", story:"Papa a eu un turban géant, une robe de velours et le poste le plus important de l'empire : tenir le biberon royal. Il le prend très au sérieux. Elle le prend un peu moins au sérieux. Regardez ce visage : c'est une patronne qui évalue un employé."},
+   {t:"Parade sur le Bosphore", c:"Deux continents. Une sieste.", story:"Istanbul est posée sur deux continents, l'Europe et l'Asie, avec le Bosphore au milieu. Elle l'a traversé au coucher du soleil sur un bateau doré, emmitouflée dans la fourrure, entre les mosquées et les ferries. C'est le seul bébé à avoir fait la sieste sur deux continents en un après-midi."},
+   {t:"Journée au hammam", c:"Marbre, mousse, pétales de rose. Avis très bruyants.", story:"Le hammam turc, c'est du marbre tiède et de la vapeur. Les servantes ont préparé des pétales de rose, des bols dorés et des serviettes toutes douces. Elle a ajouté de la mousse au plafond, par terre et sur le visage d'une servante. Note : cinq étoiles et trois éclaboussures."},
+   {t:"L'orchestre de la berceuse", c:"L'orchestre le plus bruyant de l'histoire, joué tout doucement.", story:"La fanfare militaire ottomane était si bruyante que les ennemis s'enfuyaient. Ce soir, une seule mission : jouer une berceuse. Tambours sur la pointe des pieds. Trompettes qui chuchotent. Il a fallu quarante-cinq minutes, mais elle a fini par s'endormir. Tout l'orchestre a reçu une médaille."}
+  ]},
+ japan:{country:"Japon", place:"Kyoto", title:"Shogun Yakut", role:"Shogun suprême de toutes les îles",
+  tag:"Dix mille samouraïs s'inclinent devant elle. Elle éternue. Ils s'inclinent encore.",
+  fact:"Son katana est un anneau de dentition. Personne n'ose le lui dire.",
+  issue:"Le numéro Japon", lines:[["Shogun","10 000 samouraïs, un seul planning de siestes"],["Choc au sumo","Le champion battu par un bébé"]], sticker:["Thé","3 h, 0 gorgée"], sub:"Dix mille samouraïs s'inclinent. Elle éternue. Ils s'inclinent encore.",
+  quote:"J'ai tiré ce pousse-pousse à travers tout le Japon. Elle a dormi tout le trajet.", by:"Karim, service pousse-pousse",
+  scenes:[
+   {t:"L'inspection des samouraïs", c:"Un regard sévère. Toute l'armée s'est excusée.", story:"Dix mille samouraïs en armure attendaient leur shogun devant le château. Elle est arrivée, a agité son éventail doré une fois, et tous se sont inclinés. Puis elle a tiré la langue. Ils se sont inclinés encore, par sécurité."},
+   {t:"Invaincue au sumo", c:"Le champion est entré dans l'arène. Le champion est sorti de l'arène.", story:"Le champion de sumo, c'est 180 kilos de muscles. Elle est entrée à quatre pattes dans l'arène avec sa petite ceinture et lui a lancé un regard. Il est tombé sur le dos, puis s'est pris la tête à deux mains. Les juges ont revu le ralenti cinq fois. Résultat officiel : victoire du bébé."},
+   {t:"Inspection des cerisiers", c:"Chaque pétale, validé personnellement.", story:"Au printemps, le Japon se couvre de fleurs de cerisier roses, et quelqu'un doit vérifier qu'elles sont toutes assez belles. Ce quelqu'un, c'est elle. Elle examine chaque pétale en fronçant les sourcils comme une professeure. Pour l'instant : 4 millions validés, 2 refusés pour « trop rose »."},
+   {t:"La critique de la cérémonie du thé", c:"Trois heures de cérémonie. Elle avait apporté son biberon.", story:"La cérémonie du thé japonaise est calme, lente et très élégante. Le maître de thé a passé trois heures à préparer le bol de matcha parfait. Elle l'a repoussé d'un seul doigt et a brandi son propre biberon. Le maître de thé prend quelques jours pour réfléchir."},
+   {t:"Papa tire le pousse-pousse", c:"De Tokyo à Kyoto. Sans pause. Ce sont ses ordres.", story:"Sur la première photo, Papa tire le pousse-pousse dans les vieilles rues en regrettant tous ses choix de vie. Sur la deuxième, Papa a discrètement engagé un remplaçant. Elle l'a remarqué. Elle n'a pas approuvé. Dix minutes plus tard, Papa était de retour aux brancards."},
+   {t:"Leçon de calligraphie", c:"Elle a peint « rêve ». Le rêve de Papa : dormir.", story:"Le maître calligraphe lui a appris à peindre 夢, qui veut dire « rêve ». Elle l'a peint magnifiquement, puis a peint la table, le papier et sa propre manche. Derrière elle, Papa se tient la tête. Son rêve est toujours le même : une nuit complète de sommeil."},
+   {t:"Karim, samouraï d'honneur", c:"L'armure est vraie. Le courage, c'est pour la photo.", story:"Karim, le vrai Papa, a enfilé une vraie armure de samouraï et a posé sous les cerisiers comme un grand guerrier. Très courageux, très fort, très fier. Puis elle lui a tiré l'oreille, et le grand guerrier a fait un bruit qu'aucun samouraï ne devrait jamais faire. Ces photos ont été prises juste avant."}
+  ]},
+ vikings:{country:"Norvège", place:"Les fjords", title:"Yakut l'Intrépide", role:"Jarl du Nord · Pilleuse de réserves de lait",
+  tag:"Elle a traversé la mer du Nord en pleine tempête. Sans se réveiller une seule fois.",
+  fact:"Les sagas se souviendront d'elle. Papa se souviendra des biberons de 3 heures du matin.",
+  issue:"Le numéro Norvège", lines:[["Légende","La capitaine dort pendant toute la traversée"],["Le grand","pillage du lait de 2026"]], sticker:["Chiot","trouvé"], sub:"Jarl du Nord. Pilleuse de réserves de lait.",
+  quote:"J'ai navigué dans des tempêtes. Rien n'est plus bruyant qu'elle à 3 heures du matin.", by:"Karim, chef rameur",
+  scenes:[
+   {t:"Capitaine du drakkar", c:"Quarante rameurs, une mini-capitaine, zéro pitié.", story:"Elle se tenait à la proue du drakkar avec sa hache, son bouclier et son casque à cornes pendant que les fjords défilaient. Les quarante rameurs derrière elle n'avaient jamais ramé aussi vite. Pas à cause du vent. Parce qu'elle les regardait."},
+   {t:"Armée et adorable", c:"La hache est vraie. La langue aussi.", story:"Les Vikings lui ont donné une hache, un bouclier et une cape rouge en disant : « Maintenant, fais la féroce. » Elle a été féroce pendant exactement une seconde, puis elle a tiré la langue. Tout le village a ri. Elle a été nommée Viking la plus dangereuse de Norvège, pour des raisons que personne ne peut expliquer."},
+   {t:"Festin dans la grande salle", c:"Les guerriers buvaient de l'hydromel. Elle, du lait dans une corne.", story:"La grande salle était pleine de viande rôtie, de chansons bruyantes et de guerriers qui tapaient sur les tables. Tout le monde buvait dans des cornes, alors elle aussi. La sienne était pleine de lait chaud. Elle a fini la première et a tapé la corne sur la table. Les guerriers ont applaudi. Papa a demandé une serviette."},
+   {t:"Sous les aurores boréales", c:"Le ciel entier a fait le spectacle. Elle a préféré le chiot.", story:"Ils ont attendu toute la nuit dans la neige pour voir les aurores boréales. Enfin, le ciel est devenu vert et a dansé au-dessus des montagnes. Papa a pleuré un peu. Elle n'a même pas levé les yeux : elle avait trouvé un chiot husky tout doux. Honnêtement, on la comprend."},
+   {t:"La fête nationale norvégienne", c:"Couronne de fleurs, un drapeau, et aucune idée de ce qui se passe.", story:"Le jour de la fête nationale, tout le monde porte le bunad, la tenue traditionnelle, et agite de petits drapeaux. Elle avait la tenue complète avec une couronne de fleurs et agitait son drapeau comme une pro. Puis elle a essayé de manger le drapeau. Le défilé a continué sans poser de questions."},
+   {t:"Karim rejoint le raid", c:"Le vrai Papa en vraie fourrure. Aucune idée de ce qu'il a signé.", story:"Karim, le vrai Papa, a rejoint l'équipage viking, enfilé les fourrures et souri à l'objectif comme s'il vivait le plus beau jour de sa vie. Puis la capitaine lui a annoncé qu'il ramait. Aux quarante places. Il rame encore. Envoyez des gâteaux."},
+   {t:"Le pillage des réserves de lait", c:"Tous les frigos de Scandinavie, pillés."},
+   {t:"Papa tresse son unique cheveu", c:"Quatre heures de travail. Un résultat légendaire."},
+   {t:"Le baptême du drakkar", c:"Elle l'a appelé Rot. L'équipage est honoré."}
+  ]},
+ versailles:{country:"France", place:"Versailles & Paris", title:"Sa Majesté Yakut", role:"Reine de Versailles · Protectrice de la purée",
+  tag:"Qu'ils mangent de la purée.",
+  fact:"Le château a 2 300 pièces. Elle ne s'intéresse qu'à celle où il y a le goûter.",
+  issue:"Le numéro France", lines:[["Le décret","Qu'ils mangent de la purée"],["Paris","Macarons : 400 validés"]], sticker:["Perruque","plus haute que Papa"], sub:"2 300 pièces au château. Toutes folles d'elle.",
+  quote:"Je tiens l'ombrelle. Je ne pose pas de questions.", by:"Karim, valet de pied royal",
+  scenes:[
+   {t:"La salle du trône", c:"Lustres, fauteuils dorés et une perruque pleine de roses.", story:"À Versailles, il y a de l'or partout : les murs, les fauteuils, les plafonds, même les poignées de porte. Elle s'est assise sur le plus grand fauteuil doré, a tenu son éventail en dentelle et a offert à la cour une langue royale. Trois duchesses se sont évanouies de mignonnerie. La quatrième a demandé un autographe."},
+   {t:"Arrivée à Versailles", c:"2 300 pièces. Elle veut celle avec le goûter.", story:"Elle est arrivée au château en robe bleu pastel avec des fleurs dans les cheveux et a contemplé 2 300 pièces de chic royal à la française. Les gardes se sont inclinés. Les jardiniers se sont inclinés. Sa seule question : dans quelle pièce est le goûter ?"},
+   {t:"Le jardin de la sieste royale", c:"Censée faire la sieste. Elle a posé à la place.", story:"Les jardins de Versailles sont immenses, avec des fontaines, des fleurs et des haies parfaites, faits pour la détente royale. Papa lui a trouvé un coin tranquille pour la sieste. Elle a mis sa tiare et a posé pour les photos pendant quarante minutes. C'est Papa qui a fait la sieste. Ne lui dites rien."},
+   {t:"Café à Paris", c:"Béret, croissant, petite tasse. Très français.", story:"Prochaine étape : un petit café près de la tour Eiffel. Béret rouge, marinière, croissant, petite tasse. Elle avait l'air plus parisienne que les Parisiens. Quand le serveur lui a demandé ce qu'elle voulait, elle a renversé sa tasse et montré le croissant de Papa. Très français, en effet."},
+   {t:"L'inspectrice des macarons", c:"Elle a léché un macaron. Elle a validé les 400.", story:"Paris a les meilleurs pâtissiers du monde, alors ils l'ont nommée pâtissière d'honneur. Elle a inspecté toute une tour de macarons roses, jaunes et chocolat, et en a léché exactement un. Validé. La boutique a mis sa photo en vitrine."},
+   {t:"Une perruque plus haute que Papa", c:"Une montagne de boucles poudrées. Elle n'en sait rien.", story:"Karim, le vrai Papa, a eu une veste royale très chic et s'est mis à côté d'elle pour le portrait officiel. C'est là que tout le monde a remarqué que sa perruque est presque plus haute que lui. Le peintre royal a parlé d'une « composition très équilibrée ». Papa n'a rien dit. Il connaît sa place."},
+   {t:"Qu'ils mangent de la purée", c:"Décret royal : des carottes pour tout le monde. Écrasées."},
+   {t:"La galerie des Glaces", c:"Elle a trouvé l'autre bébé dans le miroir. Ce sont désormais des rivales."},
+   {t:"Le sceptre baguette", c:"Elle règne sur la France avec une baguette. Et la mâchouille."}
+  ]},
+ west:{country:"États-Unis", place:"Du Texas à New York", title:"Shérif Yakut", role:"Biberon le plus rapide de l'Ouest · Fierté de l'Amérique",
+  tag:"Cette ville est trop petite pour nous deux. Elle a besoin de tout le berceau.",
+  fact:"Recherchée : morte de fatigue ou vive. Récompense : une couche propre.",
+  issue:"Le numéro USA", lines:[["Recherchée","Pour vol de cœurs et de sommeil"],["New York","La statue de la Liberté a une mini-rivale"]], sticker:["Récompense","1 couche propre"], sub:"Le biberon le plus rapide de l'Ouest.",
+  quote:"Cette ville est trop petite pour nous deux. Elle a eu le berceau. Moi, le plancher.", by:"Karim, shérif adjoint",
+  scenes:[
+   {t:"RECHERCHÉE", c:"Pour vol de cœurs et du sommeil de Papa.", story:"Les affiches sont apparues dans toute la ville : RECHERCHÉE, pour vol de cœurs, vol du sommeil de Papa et vol du dernier biscuit. On a envoyé le shérif attraper la hors-la-loi. Petit problème : la hors-la-loi, c'est le shérif. Elle a fait coucou à l'affiche et est partie sur son poney. Affaire classée."},
+   {t:"Le shérif prend ses fonctions", c:"Étoile brillante, mini-bottes, tolérance zéro pour être posée.", story:"Premier jour comme shérif. Elle a eu un chapeau, un gilet, un bandana rouge et deux étoiles brillantes, pour être sûre. Nouvelle loi n° 1 : personne n'a le droit de la poser. Nouvelle loi n° 2 : Papa doit faire les voix quand il lit des histoires. La ville n'a jamais été aussi sûre."},
+   {t:"La Liberté, version mini", c:"La statue mesure 93 mètres. Elle est plus célèbre.", story:"Un petit saut à New York pour voir la statue de la Liberté. Elle est venue avec sa propre torche, sa propre couronne et son propre livre. Les touristes ne savaient plus laquelle photographier. La vraie statue est là depuis 1886 et n'a jamais été aussi jalouse."},
+   {t:"Top Bébé", c:"Lunettes, écharpe au vent, zéro leçon de pilotage.", story:"Elle a mis le casque en cuir et les lunettes et est montée dans un vieil avion étoilé. Des leçons de pilotage ? Non. Un brevet de pilote ? Absolument pas. Elle a pris les commandes et a dit « ba ! ». La tour de contrôle a vidé tout le ciel, au cas où."},
+   {t:"Karim rejoint la bande", c:"Haut-de-forme à New York, chapeau de cowboy au Texas. Le même grand sourire.", story:"Karim, le vrai Papa, n'arrivait pas à choisir entre New York et le Texas, alors il a fait les deux : un immense haut-de-forme étoilé devant la statue de la Liberté, et un chapeau de cowboy dans le Far West. Elle avait une tenue assortie les deux fois, parce que c'est une pro. Papa porte encore le chapeau à la maison."},
+   {t:"Commande au saloon", c:"Un lait chaud. Sec. Laissez la bouteille."},
+   {t:"Duel à l'heure de la sieste", c:"Midi pile. Dix pas. Papa a cligné des yeux le premier."},
+   {t:"La ruée vers l'or", c:"De l'or trouvé le premier jour. Elle a tout de suite voulu le manger."}
+  ]},
+ mexico:{country:"Mexique", place:"Mexico", title:"La Pequeña Yakut", role:"Reine de la fiesta · Championne de lucha libre",
+  tag:"Un mois. Invaincue. Le masque reste en place.",
+  fact:"Prise signature : la clé de tête de bébé. Personne n'y a jamais échappé.",
+  issue:"Le numéro Mexique", lines:[["Fiesta","Endormie dans le guacamole"],["Au bord du ring","Papa abandonne en 2 secondes"]], sticker:["Campeona","mundial"], sub:"La Pequeña Yakut. Le masque reste en place.",
+  quote:"J'avais un sombrero de la taille d'une table. C'est quand même elle qu'on a photographiée.", by:"Karim, chef des mariachis",
+  scenes:[
+   {t:"Fiesta à Mexico", c:"Mariachis, tacos, une pyramide et une mini señorita.", story:"Papa portait le costume de mariachi complet avec des boutons dorés et un sombrero géant. Elle avait des roses dans les cheveux et une robe en dentelle. Les mariachis ont joué, les tacos sont arrivés, et la grande pyramide de Chichén Itzá regardait fièrement. Elle a tellement dansé qu'elle s'est endormie dans le guacamole. Meilleure fiesta du monde."},
+   {t:"L'entrée de la championne", c:"Fumée, lumières, feux d'artifice. Elle arrive en poussette."},
+   {t:"Papa abandonne", c:"La fameuse clé de tête de bébé. Papa a tenu deux secondes."},
+   {t:"La destructrice de piñata", c:"Un coup. Des bonbons partout. (C'est Papa qui a frappé.)"},
+   {t:"La remise de la ceinture", c:"La ceinture est plus grande qu'elle. Elle s'en sert de couverture."}
+  ]},
+ spain:{country:"Espagne", place:"Séville", title:"La Flamenca Yakut", role:"Reine du flamenco · Championne du monde de l'éventail",
+  tag:"Elle a tapé dans ses mains une fois. Tout Séville s'est mis à danser.",
+  fact:"L'Espagne a une sieste nationale. Elle s'entraîne pour ça depuis sa naissance.",
+  issue:"Le numéro Espagne", lines:[["Flamenco","Un clap, toute la ville danse"],["Sieste","Nouveau record : 4 heures"]], sticker:["Olé","x 1000"], sub:"Reine du flamenco. Championne de la sieste.",
+  quote:"J'ai appris le flamenco pour elle. Elle s'est endormie au premier coup de talon.", by:"Karim, danseur de réserve",
+  scenes:[
+   {t:"¡Olé à Séville !", c:"Volants rouges, un éventail et Papa avec un chapeau très sérieux.", story:"À Séville, Papa a mis son chapeau plat de flamenco et elle portait une robe rouge à volants avec des roses dans les cheveux. Les guitares ont commencé, les danseurs ont frappé du talon, et elle a agité son éventail comme si elle avait fait ça toute sa vie. Puis elle a crié « OLÉ ! ». Ça ressemblait plutôt à « BLEH ! ». La foule était en délire quand même."},
+   {t:"Soirée flamenco", c:"Un coup de talon. Standing ovation."},
+   {t:"Le test de la paella", c:"Une paella grande comme une voiture. Elle a mangé un grain de riz."},
+   {t:"Championne de la sieste", c:"La sieste nationale. Elle a fait quatre heures."},
+   {t:"Cours de guitare avec Papa", c:"Papa a joué un accord. Elle a pleuré. Fin du cours."}
+  ]},
+ india:{country:"Inde", place:"Jaipur", title:"Maharani Yakut", role:"Maharani de la Ville rose · Reine des couleurs",
+  tag:"Elle est arrivée à Jaipur et les éléphants ont fait la queue pour lui dire bonjour.",
+  fact:"La fête de Holi a été avancée à aujourd'hui. Elle l'a demandé gentiment.",
+  issue:"Le numéro Inde", lines:[["Holi","Papa a changé trois fois de couleur"],["Jaipur","Les éléphants veulent des autographes"]], sticker:["Namaste","ji"], sub:"Maharani de la Ville rose.",
+  quote:"J'ai été bleu, rose et vert pendant une semaine. Elle n'a pas eu une seule tache.", by:"Karim, arc-en-ciel humain",
+  scenes:[
+   {t:"Namaste depuis l'Inde !", c:"De l'or, des bijoux, des éléphants et un Papa très coloré.", story:"Papa portait une sherwani dorée et une écharpe de velours. Elle avait une coiffe en bijoux et une tenue rouge qui brillait de l'autre côté de la rue. Ils ont vu le Taj Mahal, salué un éléphant décoré et se sont retrouvés dans un nuage de couleurs de Holi. Papa est devenu rose, vert et bleu. Elle est restée parfaitement impeccable. Personne ne sait comment."},
+   {t:"La parade des éléphants", c:"Dix éléphants alignés. Elle a fait coucou. Ils se sont inclinés."},
+   {t:"Une journée au Taj Mahal", c:"Une merveille du monde. Elle se demandait où était son biberon."},
+   {t:"Débuts à Bollywood", c:"Un pas de danse. Record au box-office."},
+   {t:"Sieste en house-boat au Kerala", c:"Ça flotte, des palmiers, et une sieste de quatre heures."}
+  ]},
+ "home-sweet-home":{country:"À la maison", place:"À la maison", title:"Home Sweet Home", role:"La dernière étape · Son endroit préféré au monde",
+  tag:"Après onze pays, le meilleur endroit de toute la tournée était ici.",
+  fact:"Dernière minute : Papa a enfin le droit de s'asseoir.",
+  issue:"Le numéro Maison", lines:[["Exclusif","Papa s'assoit enfin"],["Révélé","Son endroit préféré au monde"]], sticker:["Nounours","validé"], sub:"Après le monde entier, le meilleur endroit, ce sont les bras de Papa.",
+  quote:"Onze pays. Soixante tenues. Le plus beau voyage de ma vie. Je peux dormir maintenant ?", by:"Karim (Papa)",
+  scenes:[
+   {t:"De retour avec Papa", c:"Après le monde entier, son endroit préféré, ce sont les bras de Papa.", story:"Onze pays, plus de costumes que Papa n'en possède, une plainte du syndicat des chameaux et zéro sieste ratée. Puis ils sont rentrés, ont mis des vêtements tout doux, attrapé le nounours et pris une vraie photo ensemble. Pas de couronne. Pas d'armure. Juste Karim, Yakut et un ours tout doux. (Elle tire toujours la langue. Il y a des choses qui ne changent jamais.)"}
+  ]}
+};
+
+const AR = {
+ egypt:{country:"مصر", place:"الجيزة", title:"ياقوت ديال النيل", role:"فرعونة الأرضين · اللي خسرات النعاس لكلشي",
+  tag:"تزادت نهار 30 يونيو 2026 وولات أقوى ملكة ف 3000 عام ديال تاريخ مصر. بابا تعطات ليه خدمة الجمل.",
+  fact:"القرار الملكي رقم 1: كل هرم خاصو يكون فيه بلاصة باش نبدلو الكوش.",
+  issue:"عدد مصر", lines:[["حصري","داخل القصر ديالها اللي فيه 500 خدام"],["بابا كيهضر","«ما نعستش من أيام الفراعنة»"]], sticker:["الجمل","6/10"], sub:"تزادت نهار 30 يونيو 2026 وكتحكم ف الفراعنة كاملين.",
+  quote:"غلبت الحيثيين. ولكن وقت النعاس ما قدرتش عليه.", by:"كريم، رمسيس العيّان",
+  scenes:[
+   {t:"العشا الملكي ديال كليوباترا الصغيرة", c:"أربعين طبسيل. وهي شربات غير الحليب.", story:"الطباخين ديال القصر خدمو تلاتة ديال الأيام: بط محمر، حلوة بالعسل، جبل ديال العنب ورمان قد راسها. حتى الملكة كليوباترا جات تشوف. ياقوت شافت الطبلة كاملة، شدات البيبرون ديالها وخرجات لسانها للبطة. الضياف غوتو بالفرحة، والطباخين مشاو يتكاو."},
+   {t:"الصورة الرسمية الملكية", c:"العنخ ف يدها واللسان برا. وقفة ديال التاريخ.", story:"الرسام الملكي طلب منها «وقار وجدية». عطاتو «لسان برا وتحراك». رسمها هكاك، حيت مع الفرعونة ما كاينش النقاش. الصورة دابا معلقة ف كل هرم، وبابا خاصو ينحني ليها كل صباح."},
+   {t:"نفس الوقفة، رتبة أخرى", c:"بابا كيحساب راسو هو الفرعون. هو غير الكرسي.", story:"بابا بقى ساعة كيتمرن على وقفة «الفرعون اللي كيفكر». ياقوت قلداتها ف جوج ثواني وجات حسن منو. الرسام ما رسم غير هي. بابا دار شكاية عند وزارة العروش، والشكاية كتشوفها… ياقوت."},
+   {t:"الوصول للجيزة", c:"الماريو ديال الشمس. الأهرامات: 6/10.", story:"من بعد رحلة طويلة على الجمل، لبسات النضاضر الملكية، شافت الهرم الكبير وعوجات حواجبها: «مزيّر بزاف. ما فيهش فين نبدلو الكوش. ستة على عشرة.» الجمل وافق، غير باش يرجع للدار."},
+   {t:"الميزانية الملكية", c:"المصروف ديال بابا: مرفوض.", story:"كل شهر الخازن الملكي كيجيب ليها ورقة الميزانية. السطر 14، المصروف ديال بابا: مرفوض. السطر 15، حليب زايد: مقبول. السطر 16، نعسة لبابا: بقات كتضحك دقيقة كاملة."},
+   {t:"قشّر ليا العنب", c:"المشّ هو المستشار الوحيد اللي كتيق فيه.", story:"الغدا كان على كنبة ديال الذهب: عنب، كاس ديال الذهب ومشّ ملكي. المشّ عندو الحق يبقى حيت حتى هو كينعس 18 ساعة ف النهار. كيفهمو بعضياتهم."},
+   {t:"الصورة الملكية، المحاولة التانية", c:"قالو ليها ضحكي. خرجات لسانها.", story:"المحاولة التانية كانت باش تصلح الأولى. المصور قال: «ضحكة كبيرة!» شدات العنخ الصغير، شافت ف الكاميرا نيشان وعاودات اللسان. المحاولة التانية ولات هي الرسمية. وما غاديش تكون شي تالتة."},
+   {t:"كريم كيدخل للعائلة الملكية", c:"بابا الحقيقي ف لباس فرعون حقيقي. ونفس اللسان الملكي.", story:"كريم، بابا الحقيقي، أخيرا خدا اللباس ديال الفرعون ديالو وتصور قدام الأهرامات وهو كيضحك بحال إلا هو اللي حاكم. ماشي هو. شوفو مزيان: هي ديجا خارجة اللسان الملكي. الأهرامات شافت 4500 عام ديال التاريخ، وهادي هي التصويرة اللي كتعجبهم كثر."},
+   {t:"تفتيش الأهرامات", c:"كتفتش الأهرامات بحال إلا ديالها. وهوما ديالها."},
+   {t:"العرش ديال 500 خدام", c:"خمسمية خدام. كاملين ف خدمة الكوش."},
+   {t:"هجوم العربة الصغيرة", c:"مشات للحرب بـ3 كلم ف الساعة. العدو استسلم من الزين."},
+   {t:"رمسيس كيعس على الدرية", c:"غلب الحيثيين. وغلباتو تكريعة وحدة. 💀"},
+   {t:"التقماط ديال المومياء", c:"أقوى تقماط من 3000 عام."}
+  ]},
+ morocco:{country:"المغرب", place:"مراكش", title:"لالة ياقوت", role:"أميرة القصبة · ملكة أتاي بالنعناع",
+  tag:"قطعات الصحرا على الجمل. ودارت الجمل يهز حتى الكروسة.",
+  fact:"كل الزرابي ديال السوق تفرشو ليها. ونعسات فوقهم كاملين.",
+  issue:"عدد المغرب", lines:[["أخبار الصحرا","الجمل بغا الزيادة ف الخلصة"],["من السوق","التجار حبسو المساومة"]], sticker:["أتاي","5 نجوم"], sub:"أميرة القصبة. ملكة أتاي بالنعناع.",
+  quote:"هزيت ليها الكروسة الصحرا كاملة. والجمل ما هز والو.", by:"كريم، مسؤول الباليزات",
+  scenes:[
+   {t:"طقوس أتاي", c:"تكبّ من متر لفوق. وبغات تكبو هي.", story:"أتاي بالنعناع كيتكبّ من الفوق بزاف باش تطلع الرغوة. بابا تمرن سيمانة كاملة، كبّو مزيان وبقى كيتسنى التصفيق. من بعد ياقوت شدات البراد، كبّاتو على الصينية كاملة وبانت فرحانة بزاف براسها. خدمة خمس نجوم، على حساب رأيها."},
+   {t:"الطريق للصحرا", c:"الجمل طلب الزيادة.", story:"تلفّو ف الزرق بحال رجال الصحرا ودخلو للكثبان. الجمل هز بابا، الما، الماكلة، الكروسة وربعة ديال الصاكات ديال حوايج الدرية. ياقوت ما هزت والو، وهي اللي كانت كتشكي كثر. الجمل دابا كيتفاوض مع النقابة ديالو."},
+   {t:"التقضية ف السوق", c:"رجّعات كلشي بلاش، غير بالشوفة.", story:"ف السوق ديال مراكش خاصك تساوم. بابا قال 100. مول الحانوت قال 300. من بعد ياقوت، بالطربوش الحمر الصغير ديالها، شافت فيه وصافي. سكات. عطاها الفنار بلاش، وزاد زربية، وزاد عنقة. وبابا خلص 100 على كل حال، ما عرفناش كيفاش."},
+   {t:"أميرة الرياض", c:"خصة، شجر الليمون، الزليج ونعسة مهمة بزاف.", story:"الرياض هو دار فيها جردة سرية ف الوسط. الرياض ديالهم كانت فيه خصة، زليج وشجر الليمون. فتشات الخصة، وافقات على الزليج ونعسات على بابا ف ربع دقايق. بابا ما تحركش تلت ساعات. كيقول كانت أحسن وأصعب عشية ف حياتو."},
+   {t:"كارط بوسطال من مراكش", c:"ضحكات للتصويرة، ومن بعد بغات تاكل النضاضر ديال بابا.", story:"اللور ديالهم كاينة الكتبية، أشهر صومعة ف مراكش. بابا بغا تصويرة زوينة بحال الكارط بوسطال. هي سلمات على السياح، دارت بفمها للحمام وحاولات تاكل النضاضر ديالو. هادو هوما جوج التصاور الوحيدين اللي كلشي فيهم كيشوف ف الكاميرا."},
+   {t:"نسمة البحر ف الصويرة", c:"الريح دات الطربوش ديال بابا جوج مرات.", story:"المحطة الجاية: الصويرة، المدينة اللي على البحر بالديور البيض والسور القديم. الريح طيرات الطربوش ديال بابا جوج مرات. النوارس بغاو الماكلة ديالها. غوّتات عليهم بلغة الدراري الصغار وهربو. النوارس ما رجعوش من ديك النهار."},
+   {t:"نهار الحمّام", c:"البخار، ورد الورد وأميرة كتشوّش الما.", story:"الحمام المغربي كلو بخار. بابا بغا يرتاح. ياقوت بغات تشوّش الما. عرفو شكون ربح. بابا خرج بورد الورد ف شعرو، وبالنضاضر اللي نقى ف شمال إفريقيا كاملة."},
+   {t:"بابا كيطيب الطاجين", c:"ست ساعات ديال الطياب على مهل. وهي شربات الحليب."},
+   {t:"الزربية الطايرة", c:"شرات زربية وحدة من مراكش. ولات الطيارة الخاصة ديالها."}
+  ]},
+ rome:{country:"إيطاليا", place:"روما", title:"ياقوت قيصر", role:"إمبراطورة روما · اللي غلبات وقت النعاس",
+  tag:"جات. شافت. ورجّعات الحليب على مجلس الشيوخ.",
+  fact:"SPQR دابا معناها: صغيرة، بنينة، قوية، ورويال.",
+  issue:"عدد روما", lines:[["عاجل","مجلس الشيوخ صوت 300–0 على نعاس كثر"],["المصارعين","«كنخافو منها»"]], sticker:["تاج الغار","البونيه الجديد"], sub:"جات. شافت. ورجّعات على مجلس الشيوخ.",
+  quote:"حتى نتي يا ياقوت؟ كل ليلة ف التلاتة ديال الصباح؟", by:"كريم، شيخ الكوش",
+  scenes:[
+   {t:"الخطاب قدام مجلس الشيوخ", c:"خطاب ديال ربع ثواني. كاع الشيوخ صوتو بنعم.", story:"تلتمية شيخ لابسين التوجا البيضا تجمعو باش يسمعو الإمبراطورة الجديدة. هزات يد صغيورة، خرجات لسانها وقالت «با». النتيجة: 300 ضد 0. حتى واحد ما عرف على شنو صوتو. ودابا ولا قانون."},
+   {t:"الانتصار ف الكولوسيوم", c:"خمسين ألف معجب. وهي ناعسة.", story:"خمسين ألف روماني عمّرو الكولوسيوم باش يشجعو الإمبراطورة ديالهم. الورد طايح من السما، النفار كيصوني، والجمهور مقلوب. هي نعسات من الأول حتى للخر فوق فراش ديال القطيفة الحمرا. المؤرخين كيقولو هادا أهدأ انتصار ف تاريخ روما."},
+   {t:"تجريب تاج الغار", c:"جوج خياطة ملكيين. والتعاون: صفر.", story:"تلبّس تاج الغار لدرية صعيب كثر من غزو بلاد الغال. جوج من أحسن الخياطة ف الإمبراطورية حاولو. عطاتهم الحاجب الغضبان ديالها. بجوج طلبو السماح وعطاوها شي حاجة تاكلها. التاج بقى، غير حيت هي بغات."},
+   {t:"سباق العربات", c:"السرعة القصوى: 3 كلم ف الساعة. وربحات.", story:"السباق الكبير ديال العربات ف روما، بأسرع العودان وأشجع السواقة. شدات اللجام، عوجات حواجبها، والعربات الأخرين وقفو غير باش يخليوها تدوز. العود ديالها قال عمرو ما حس بهاد الضغط ف حياتو."},
+   {t:"حتى نتا يا بابا؟", c:"فيقها من النعاس. روما عمرها ما غاتنسى.", story:"بابا تحنا باش يعطيها بوسة صغيورة وهي ناعسة. غلطة كبيرة. فاقت، شافت فيه بحال إلا خان الإمبراطورية كاملة، وغوتات حتى تسمعات ف اليونان. الشيوخ كتبو كلشي. دابا راه ف كتب التاريخ."},
+   {t:"الدوش ف الحمامات الرومانية", c:"بناو قناة ديال الما على دوش واحد. وكان يستاهل.", story:"الرومان بناو كيلومترات ديال القنوات باش يجيبو الما للمدينة. كلشي على هاد اللحظة: بانيو ديال الذهب، جبل ديال الرغوة وإمبراطورة خارجة لسانها. شوّشات الما على حراس القصر. وشكروها."},
+   {t:"الصبع للفوق ولا للتحت؟", c:"المصارعين كيتسناو الحكم ديالها. وهي مشغولة كتمص صبعها."}
+  ]},
+ ottoman:{country:"تركيا", place:"إسطنبول", title:"السلطانة ياقوت", role:"سلطانة السبع تلال · حارسة الحلقوم",
+  tag:"كاع الخزامى ف إسطنبول تغرسو على شرفها. حاولات تاكل وحدة.",
+  fact:"ياقوت بالتركية معناها الياقوتة الحمرا. والخزينة ديال القصر دابا فيها جوج.",
+  issue:"عدد إسطنبول", lines:[["حياة القصر","أقوى واحد ف طوب قابي تزاد نهار 30 يونيو 2026"],["التذواق","والو كيفوت الحليب"]], sticker:["ياقوت","= ياقوتة"], sub:"كاع الخزامى ف إسطنبول تغرسو على شرفها.",
+  quote:"وعدوني بقصر. عطاوني صاك ديال الكوش. بالحرير.", by:"كريم، الصدر الأعظم",
+  scenes:[
+   {t:"المجلس ف طوب قابي", c:"الوزرا كيجيبو المشاكل. وهي كتجيب تكريعة.", story:"كل صباح القصر كامل كيدير الصف باش يحكي للسلطانة المشاكل ديال الإمبراطورية: الضرايب، الحدود، جمل تلف. كتسمع مزيان، كتهز يد ملكية… وكتكرّع. المشكل تحل. الوزرا ما فاهمين كيفاش، ولكن ديما كتنفع."},
+   {t:"تذواق الحلقوم الملكي", c:"ربعين نوع ديال الحلقوم. ونعسات.", story:"الحلوانية ديال القصر جابو أحسن حلقوم: بالورد، بالفستق، بالحامض، صينية ديال النقرة عامرة. بقاو كيتسناو وهوما مخلوعين. شافت، تنهدات، ونعسات ويدها على حنكها. الحلوانية فهموها مدح. وبابا كلا الصينية كاملة."},
+   {t:"الصدر الأعظم (بابا)", c:"ترقى لصدر أعظم. مسؤول على البيبرون.", story:"بابا خدا عمامة كبيرة، قفطان ديال القطيفة وأهم خدمة ف الإمبراطورية: يشد البيبرون الملكي. داخلها بجد. هي داخلاه بجد شوية قل. شوفو هاد الوجه: هادي باطرونة كتقيّم الخدام ديالها."},
+   {t:"الدورة ف البوسفور", c:"جوج قارات. نعسة وحدة.", story:"إسطنبول جالسة على جوج قارات، أوروبا وآسيا، والبوسفور ف الوسط. قطعاتو مع الغروب ف فلوكة ديال الذهب، ملفوفة ف الفرو، بين الجوامع والبابورات. دابا هي الدرية الوحيدة اللي نعسات ف جوج قارات ف عشية وحدة."},
+   {t:"نهار الحمام التركي", c:"الرخام، الرغوة وورد الورد. وآراء عالية بزاف.", story:"الحمام التركي كلو رخام سخون وبخار. الخدامات وجدو ورد الورد، زلايف ديال الذهب وفوطات رطبين. هي زادت الرغوة ف السقف، ف الأرض وف وجه وحدة من الخدامات. التقييم: خمس نجوم وتلاتة ديال التشويشات."},
+   {t:"فرقة التهويدة الملكية", c:"أعلى فرقة ف التاريخ، كتعزف بشوية.", story:"الفرقة العسكرية العثمانية كانت مشهورة بالصداع، حتى كان العدو كيهرب. الليلة عندهم مهمة وحدة: يعزفو تهويدة. الطبول على رؤوس الصبعان. النفار كيوشوش. خدات خمسة وربعين دقيقة، ولكن ف الخر نعسات. الفرقة كاملة خدات الميداليات."}
+  ]},
+ japan:{country:"اليابان", place:"كيوطو", title:"الشوغون ياقوت", role:"الشوغون الأعلى ديال الجزر كاملين",
+  tag:"عشرة آلاف ساموراي كينحنيو ليها. كتعطس. كيعاودو ينحنيو.",
+  fact:"السيف ديالها حلقة ديال السنان. حتى واحد ما تجرأ يقول ليها.",
+  issue:"عدد اليابان", lines:[["الشوغون","10000 ساموراي وجدول نعاس واحد"],["صدمة السومو","البطل تغلب من درية"]], sticker:["أتاي","3 سوايع، 0 جغمة"], sub:"عشرة آلاف ساموراي كينحنيو. كتعطس. كيعاودو.",
+  quote:"جريت هاد الريكشا اليابان كاملة. وهي نعسات الطريق كاملة.", by:"كريم، مصلحة الريكشا",
+  scenes:[
+   {t:"تفتيش الساموراي", c:"شوفة وحدة قاصحة. الجيش كامل طلب السماح.", story:"عشرة آلاف ساموراي لابسين الدرع كانو كيتسناو الشوغون ديالهم قدام القصر. وصلات، حركات المروحة ديال الذهب مرة وحدة، وكلهم انحناو. من بعد خرجات لسانها. عاودو انحناو، باش يكونو مرتاحين."},
+   {t:"ما تغلباتش ف السومو", c:"البطل دخل للحلبة. البطل خرج من الحلبة.", story:"بطل السومو 180 كيلو ديال العضلات. دخلات للحلبة على ربعة بالحزام الصغير ديالها وشافت فيه شوفة وحدة. طاح على ضهرو، ومن بعد شد راسو بيديه. الحكام عاودو الإعادة خمس مرات. النتيجة الرسمية: ربحات الدرية."},
+   {t:"تفتيش نوار الكرز", c:"كل ورقة، وافقات عليها بيدها.", story:"ف الربيع، اليابان كتعمر بنوار الكرز الوردي، وخاص شي حد يتأكد بلي كلو زوين. هاد الحد هو هي. كتفتش كل ورقة وهي معوجة حواجبها بحال شي أستاذة. حتى لدابا: 4 مليون مقبولة، وجوج مرفوضين حيت «وردي بزاف»."},
+   {t:"الناقدة ديال طقوس أتاي", c:"تلت ساعات ديال الطقوس. وجابت البيبرون ديالها.", story:"طقوس أتاي اليابانية هادية، بشوية وأنيقة بزاف. المعلم ديال أتاي دوز تلت ساعات كيوجد أحسن زلافة ماتشا. دفعاتها بصبع واحد وهزات البيبرون ديالها. المعلم دابا خدا شي أيام راحة باش يفكر ف الحياة."},
+   {t:"بابا كيجر الريكشا", c:"من طوكيو حتى لكيوطو. بلا راحة. أوامرها.", story:"ف التصويرة الأولى، بابا كيجر الريكشا ف الزناقي القدام وهو ندمان على كل قرار ف حياتو. ف التانية، بابا خدّم واحد بلاصتو بالسكات. هي عاقت. وما عجبهاش الحال. من بعد عشر دقايق، بابا رجع لخدمة الريكشا."},
+   {t:"درس الخط الياباني", c:"كتبات «حلم». الحلم ديال بابا: النعاس.", story:"معلم الخط علمها ترسم 夢، اللي معناها «حلم». رسماتها زوينة بزاف، ومن بعد رسمات على الطبلة، على الورقة وعلى الكم ديالها. اللور منها، بابا شاد راسو. الحلم ديالو ديما هو هو: ليلة كاملة ديال النعاس."},
+   {t:"كريم، ساموراي شرفي", c:"الدرع حقيقي. والشجاعة غير للتصويرة.", story:"كريم، بابا الحقيقي، لبس درع ساموراي حقيقي وتصور تحت نوار الكرز بحال شي محارب كبير. شجاع، قوي، فرحان براسو. من بعد هي جراتو من ودنو، والمحارب الكبير دار صوت حتى ساموراي ما خاصو يديرو. هاد التصاور تشدو قبل ديك اللحظة بالضبط."}
+  ]},
+ vikings:{country:"النرويج", place:"الفيوردات", title:"ياقوت اللي ما كتخافش", role:"زعيمة الشمال · اللي كتسرق مخازن الحليب",
+  tag:"قطعات بحر الشمال ف العاصفة. وما فاقت حتى مرة.",
+  fact:"الحكايات غادي تعقل عليها. وبابا غادي يعقل على البيبرون ديال التلاتة ديال الصباح.",
+  issue:"عدد النرويج", lines:[["أسطورة","القبطانة نعسات الرحلة كاملة"],["الغارة الكبيرة","على الحليب ف 2026"]], sticker:["جرو","لقاتو"], sub:"زعيمة الشمال. اللي كتسرق الحليب.",
+  quote:"بحرت ف العواصف. والو أعلى منها ف التلاتة ديال الصباح.", by:"كريم، رئيس الجدّافة",
+  scenes:[
+   {t:"قبطانة السفينة", c:"ربعين جدّاف، قبطانة صغيورة، وبلا رحمة.", story:"كانت واقفة ف القدام ديال السفينة الفايكينغ بالشاقور، الترس والخوذة ديال القرون، والفيوردات دايزين. الربعين جدّاف اللور منها عمرهم ما جدفو بهاد السرعة. ماشي بسباب الريح. حيت هي كانت كتشوف فيهم."},
+   {t:"مسلحة وزوينة", c:"الشاقور حقيقي. واللسان حتى هو.", story:"الفايكينغ عطاوها شاقور، ترس وكاب حمرا وقالو ليها: «دابا بيني راسك قاصحة.» بقات قاصحة ثانية وحدة بالضبط، ومن بعد خرجات لسانها. الدوار كامل ضحك. سمّاوها أخطر فايكينغ ف النرويج، وحتى واحد ما عرف علاش."},
+   {t:"العرضة ف القاعة الكبيرة", c:"المحاربين شربو العسل. وهي شربات الحليب ف قرن.", story:"القاعة كانت عامرة باللحم المشوي، الغنا العالي ومحاربين كيضربو على الطبالي. كلشي كيشرب من القرون، حتى هي. القرن ديالها كان عامر بالحليب السخون. سالات هي الأولى وضربات بالقرن على الطبلة. المحاربين صفقو. وبابا طلب كلينيكس."},
+   {t:"تحت الشفق القطبي", c:"السما كاملة دارت عرض. وهي فضلات الجرو.", story:"بقاو الليل كامل ف التلج كيتسناو الشفق القطبي. ف الخر السما ولات خضرا وبدات كتشطح فوق الجبال. بابا بكى شوية. هي حتى ما هزات عينيها، حيت لقات جرو هاسكي رطب. وبصراحة، عندها الحق."},
+   {t:"العيد الوطني ديال النرويج", c:"تاج ديال النوار، علام، وما عارفة والو شنو واقع.", story:"ف العيد الوطني، كلشي كيلبس البوناد، اللباس التقليدي، وكيحرك علامات صغار. هي لبسات اللبسة كاملة بتاج ديال النوار وبقات كتحرك العلام بحال شي محترفة. من بعد حاولات تاكل العلام. الاستعراض كمل بلا ما حد يسول."},
+   {t:"كريم كيدخل للغارة", c:"بابا الحقيقي ف الفرو الحقيقي. وما عارف شنو سنا.", story:"كريم، بابا الحقيقي، دخل مع الطاقم ديال الفايكينغ، لبس الفرو وضحك للكاميرا بحال إلا عايش أحسن نهار ف حياتو. من بعد القبطانة قالت ليه بلي هو اللي غادي يجدف. ف الربعين بلاصة. باقي كيجدف حتى لدابا. صيفطو ليه شي حاجة ياكلها."},
+   {t:"الغارة على مخازن الحليب", c:"كاع التلاجات ديال إسكندنافيا، تسرقو."},
+   {t:"بابا كيضفر الشعرة الوحيدة ديالها", c:"ربع ساعات ديال الخدمة. نتيجة أسطورية."},
+   {t:"تسمية السفينة", c:"سمّاتها «تكريعة». والطاقم فرحان بزاف."}
+  ]},
+ versailles:{country:"فرنسا", place:"فرساي وباريس", title:"جلالة الملكة ياقوت", role:"ملكة فرساي · حامية البيري",
+  tag:"خليوهم ياكلو البيري.",
+  fact:"القصر فيه 2300 بيت. هي ما كيهمها غير البيت اللي فيه الماكلة.",
+  issue:"عدد فرنسا", lines:[["القرار","خليوهم ياكلو البيري"],["باريس","الماكارون: 400 مقبولين"]], sticker:["الباروكة","أطول من بابا"], sub:"2300 بيت ف القصر. كاملين مبوقين عليها.",
+  quote:"كنشد المظلة. وما كنسولش.", by:"كريم، الخادم الملكي",
+  scenes:[
+   {t:"قاعة العرش", c:"الثريات، الكراسي ديال الذهب وباروكة عامرة بالورد.", story:"ف فرساي الذهب ف كل بلاصة: الحيوط، الكراسي، السقف، حتى المقابض ديال البيبان. جلسات على أكبر كرسي ديال الذهب، شدات المروحة ديال الدونتيل وعطات للبلاط لسان ملكي. تلاتة ديال الدوقات طاحو من الزين. والرابعة طلبات توقيع."},
+   {t:"الوصول لفرساي", c:"2300 بيت. وهي بغات غير اللي فيه الماكلة.", story:"وصلات للقصر بكسوة زرقة فاتحة والنوار ف شعرها، وشافت 2300 بيت ديال الفخامة الفرنسية. الحراس انحناو. الجنانة انحناو. السؤال الوحيد ديالها: فين البيت اللي فيه الماكلة؟"},
+   {t:"جردة النعاس الملكية", c:"كان خاصها تنعس. تصورات بلاصة.", story:"الجرادي ديال فرساي كبار بزاف، فيهم الخصات، النوار والسياجات المقادين، كاملين للراحة الملكية. بابا لقى ليها بلاصة هادية باش تنعس. هي لبسات التاج وبقات تتصور ربعين دقيقة. بابا هو اللي نعس. ما تقولو ليها والو."},
+   {t:"قهوة ف باريس", c:"بيري، كرواسة، وكاس صغير. فرنسي بزاف.", story:"المحطة الجاية: قهوة صغيرة حدا البرج ديال إيفل. بيري حمر، تيشورت مخطط، كرواسة وكاس صغير. بانت باريزية كثر من الباريزيين. ملي الكارسون سولها شنو بغات، قلبات الكاس وورات بصبعها الكرواسة ديال بابا. فرنسي بزاف بصح."},
+   {t:"مفتشة الماكارون", c:"لحسات ماكارون وحدة. ووافقات على 400.", story:"باريس فيها أحسن الحلوانية ف العالم، داكشي علاش داروها حلوانية شرفية. فتشات برج كامل ديال الماكارون الوردي، الصفر وبالشوكولا، ولحسات وحدة بالضبط. مقبول. الحانوت حط التصويرة ديالها ف الفيترينة."},
+   {t:"باروكة أطول من بابا", c:"جبل ديال الشعر المجعد. وهي ما عارفة والو.", story:"كريم، بابا الحقيقي، لبس جاكيطة ملكية فرنسية شيك ووقف حداها للبورتري الرسمي. تما كلشي عاق بلي الباروكة ديالها تقريبا أطول منو. الرسام الملكي قال «التركيبة متوازنة بزاف». بابا ما قال والو. عارف البلاصة ديالو."},
+   {t:"خليوهم ياكلو البيري", c:"قرار ملكي: خيزو لكلشي. مهروس."},
+   {t:"قاعة المرايا", c:"لقات درية أخرى ف المراية. ولاو منافسات."},
+   {t:"صولجان الكوميرة", c:"كتحكم فرنسا بكوميرة. وكتمضغها."}
+  ]},
+ west:{country:"أمريكا", place:"من تكساس حتى نيويورك", title:"الشريف ياقوت", role:"أسرع بيبرون ف الغرب · فخر أمريكا",
+  tag:"هاد المدينة صغيرة علينا بجوج. هي محتاجة البرسو كامل.",
+  fact:"مطلوبة: عيانة ولا حية. الجائزة: كوش نقي.",
+  issue:"عدد أمريكا", lines:[["مطلوبة","بتهمة سرقة القلوب والنعاس"],["نيويورك","تمثال الحرية عندو منافسة صغيورة"]], sticker:["الجائزة","كوش نقي"], sub:"أسرع بيبرون ف الغرب.",
+  quote:"هاد المدينة صغيرة علينا بجوج. هي خدات البرسو. وأنا خديت الأرض.", by:"كريم، نائب الشريف",
+  scenes:[
+   {t:"مطلوبة", c:"بتهمة سرقة القلوب والنعاس ديال بابا.", story:"الأفيشات تلصقو ف المدينة كاملة: مطلوبة، بتهمة سرقة القلوب، سرقة النعاس ديال بابا وسرقة آخر بيسكوي. صيفطو الشريف يقبط المجرمة. المشكل الصغير: المجرمة هي الشريف. سلمات على الأفيش ومشات على البوني ديالها. القضية تسدات."},
+   {t:"الشريف كيبدا الخدمة", c:"نجمة كتلمع، صباط صغيور، وممنوع تحطوها.", story:"النهار الأول ديالها كشريف. خدات طربوش، جيلي، منديل حمر وجوج نجمات كيلمعو، باش تكون متأكدة. القانون الجديد رقم 1: حتى واحد ما عندو الحق يحطها. القانون رقم 2: بابا خاصو يبدل الصوت ملي كيقرا الحكايات. المدينة عمرها ما كانت آمنة بحال دابا."},
+   {t:"تمثال الحرية، النسخة الصغيرة", c:"التمثال طولو 93 متر. وهي مشهورة كثر منو.", story:"دورة صغيرة لنيويورك باش تشوف تمثال الحرية. جات بالشعلة ديالها، التاج ديالها والكتاب ديالها. السياح ما بقاوش عارفين شكون يصورو. التمثال الحقيقي واقف تما من 1886، وعمرو ما غار بحال هاد المرة."},
+   {t:"توب بيبي", c:"النضاضر، الشال طاير، وبلا حتى درس ديال الطيران.", story:"لبسات الكاسك ديال الجلد والنضاضر وطلعات ف طيارة قديمة بالنجوم. دروس الطيران؟ لا. البيرمي ديال الطيار؟ أبدا. شدات القيادة وقالت «با!». برج المراقبة خوا السما كاملة، باش يكون مرتاح."},
+   {t:"كريم كيدخل للعصابة", c:"طربوش عالي ف نيويورك، وطربوش الكاوبوي ف تكساس. ونفس الضحكة.", story:"كريم، بابا الحقيقي، ما قدرش يختار بين نيويورك وتكساس، داكشي علاش دار بجوج: طربوش طويل بالنجوم قدام تمثال الحرية، وطربوش ديال الكاوبوي ف الغرب. هي لبسات لبسة مناسبة ف المرتين، حيت هي بروفيسيونيل. وبابا باقي لابس الطربوش ف الدار."},
+   {t:"الطلبية ف الصالون", c:"حليب سخون. بلا والو. خليو القرعة."},
+   {t:"المبارزة ف وقت النعاس", c:"الطناش ديال النهار. عشر خطوات. بابا رمش هو الأول."},
+   {t:"البحث على الذهب", c:"لقات الذهب ف النهار الأول. ودغيا بغات تاكلو."}
+  ]},
+ mexico:{country:"المكسيك", place:"مكسيكو", title:"لا بيكينيا ياقوت", role:"ملكة الفييستا · بطلة لوتشا ليبري",
+  tag:"عندها شهر. ما تغلباتش. والقناع ما كيتحيدش.",
+  fact:"الحركة المشهورة ديالها: القفلة ديال الراس. حتى واحد ما فلت منها.",
+  issue:"عدد المكسيك", lines:[["الفييستا","نعسات ف الكواكامولي"],["حدا الحلبة","بابا استسلم ف جوج ثواني"]], sticker:["كامبيونا","موندیال"], sub:"لا بيكينيا ياقوت. القناع ما كيتحيدش.",
+  quote:"لبست سومبريرو قد الطبلة. وهي اللي تصورات كثر.", by:"كريم، رئيس الماريتشي",
+  scenes:[
+   {t:"الفييستا ف مكسيكو", c:"الماريتشي، التاكوس، هرم، وسنيوريتا صغيورة.", story:"بابا لبس لبسة الماريتشي كاملة بالبوطونات ديال الذهب وسومبريرو كبير. هي دارت الورد ف شعرها وكسوة ديال الدونتيل. الماريتشي عزفو، التاكوس وصلو، والهرم الكبير ديال تشيتشن إيتزا كان كيشوف فرحان. شطحات حتى نعسات ف الكواكامولي. أحسن فييستا ف الدنيا."},
+   {t:"الدخلة ديال البطلة", c:"الدخان، الضو، والفيزيعات. وهي داخلة ف الكروسة."},
+   {t:"بابا كيستسلم", c:"القفلة المشهورة ديال الراس. بابا صبر جوج ثواني."},
+   {t:"مدمرة البينياطا", c:"ضربة وحدة. الحلوى ف كل بلاصة. (بابا هو اللي ضرب.)"},
+   {t:"حفل الحزام", c:"الحزام أكبر منها. كتستعملو غطا."}
+  ]},
+ spain:{country:"إسبانيا", place:"إشبيلية", title:"الفلامينكا ياقوت", role:"ملكة الفلامينكو · بطلة العالم ف تحراك المروحة",
+  tag:"صفقات مرة وحدة. إشبيلية كاملة بدات كتشطح.",
+  fact:"إسبانيا عندها نعسة وطنية سميتها السييستا. وهي كتوجد ليها من نهار تزادت.",
+  issue:"عدد إسبانيا", lines:[["الفلامينكو","تصفيقة وحدة، والمدينة كاملة كتشطح"],["السييستا","رقم قياسي جديد: 4 سوايع"]], sticker:["أولي","× 1000"], sub:"ملكة الفلامينكو. بطلة السييستا.",
+  quote:"تعلمت الفلامينكو على قبلها. ونعسات مع أول ضربة بالرجل.", by:"كريم، الشطاح الاحتياطي",
+  scenes:[
+   {t:"أولي ف إشبيلية!", c:"كسوة حمرا، مروحة، وبابا بطربوش جدي بزاف.", story:"ف إشبيلية، بابا لبس الطربوش المسطح ديال الفلامينكو، وهي لبسات كسوة حمرا بالكشكشة والورد ف شعرها. القيتارات بداو، الشطاحة ضربو برجليهم، وهي حركات المروحة بحال إلا دارتها حياتها كاملة. من بعد غوتات «أولي!». جات بحال «بليه!». والجمهور تقلب على كل حال."},
+   {t:"ليلة الفلامينكو", c:"ضربة وحدة بالرجل. الناس كاملين وقفو يصفقو."},
+   {t:"تذواق البايلا", c:"بايلا قد الطوموبيل. كلات حبة رز وحدة."},
+   {t:"بطلة السييستا", c:"النعسة الوطنية. دارت ربع سوايع."},
+   {t:"درس القيتارة مع بابا", c:"بابا ضرب نوتة وحدة. هي بكات. الدرس سالا."}
+  ]},
+ india:{country:"الهند", place:"جايبور", title:"المهراني ياقوت", role:"مهراني المدينة الوردية · ملكة الألوان",
+  tag:"وصلات لجايبور والفيلة دارو الصف باش يسلمو عليها.",
+  fact:"عيد الهولي تقدّم لليوم. هي طلبات بالظريف.",
+  issue:"عدد الهند", lines:[["الهولي","بابا تبدل ليه اللون تلت مرات"],["جايبور","الفيلة بغاو التوقيع"]], sticker:["ناماستي","جي"], sub:"مهراني المدينة الوردية.",
+  quote:"بقيت زرق، وردي وخضر سيمانة كاملة. وهي حتى نقطة ما جاتها.", by:"كريم، قوس قزح بشري",
+  scenes:[
+   {t:"ناماستي من الهند!", c:"الذهب، الجواهر، الفيلة، وبابا ملون بزاف.", story:"بابا لبس شيرواني ديال الذهب وشال ديال القطيفة. هي دارت تاج ديال الجواهر ولبسة حمرا كتلمع من الجهة الأخرى ديال الزنقة. شافو تاج محل، سلمو على فيل مزوق، وطاحو وسط سحابة ديال ألوان الهولي. بابا ولا وردي، خضر وزرق. هي بقات نقية مية ف المية. حتى واحد ما عرف كيفاش."},
+   {t:"استعراض الفيلة", c:"عشرة ديال الفيلة ف الصف. سلمات. انحناو."},
+   {t:"نهار ف تاج محل", c:"وحدة من عجائب الدنيا. وهي كتساءل فين البيبرون."},
+   {t:"البداية ف بوليوود", c:"حركة شطيح وحدة. رقم قياسي ف الشباك."},
+   {t:"نعسة ف الفلوكة ف كيرالا", c:"الما، النخل، ونعسة ديال ربع سوايع."}
+  ]},
+ "home-sweet-home":{country:"الدار", place:"الدار", title:"الدار هي الدار", role:"المحطة الأخيرة · البلاصة المفضلة ديالها ف الدنيا",
+  tag:"من بعد حداش بلاد، أحسن بلاصة ف الجولة كاملة كانت هنا.",
+  fact:"عاجل: بابا أخيرا عندو الحق يجلس.",
+  issue:"عدد الدار", lines:[["حصري","بابا أخيرا جلس"],["مكشوف","البلاصة المفضلة ديالها ف الدنيا"]], sticker:["الدبدوب","مقبول"], sub:"من بعد الدنيا كاملة، أحسن بلاصة هي حضن بابا.",
+  quote:"حداش بلاد. ستين لبسة. أحسن سفر ف حياتي. نقدر ننعس دابا؟", by:"كريم (بابا)",
+  scenes:[
+   {t:"رجعنا للدار مع بابا", c:"من بعد الدنيا كاملة، البلاصة المفضلة ديالها هي حضن بابا.", story:"حداش بلاد، حوايج كثر من اللي عند بابا، شكاية من نقابة الجمال، وحتى نعسة ما تخطات. من بعد رجعو للدار، لبسو حوايج مريحين، شدو الدبدوب وتصورو تصويرة حقيقية مع بعض. بلا تاج. بلا درع. غير كريم، ياقوت ودبدوب رطب. (وباقا خارجة لسانها. كاين شي حوايج عمرها ما كتبدل.)"}
+  ]}
+};
+
+
+/* Morocco is the family's home country, so it opens the tour */
+WORLDS.sort((a,b)=>(a.id==="morocco"?-1:b.id==="morocco"?1:0));
+
+const UI={
+ en:{sub:"Royal World Tour", all:"All issues", mast:"YAKUT", no:"No.", kicker:"The Royal World Tour · November 2026",
+   line:"Born 30 June 2026. Eleven countries. One very tired Karim.",
+   p:"Yakut was born on 30 June 2026 and immediately went on a world tour, in costume. Every country is its own magazine issue, full of photos and the true(ish) stories behind them. Her dad Karim came along to carry the bags.",
+   cta:"Start in Morocco", badge:["30","June"], standH:"Pick an issue", standP:n=>`${n} photos, each one with its own story.`,
+   photos:n=>n?`${n} photo${n===1?"":"s"}`:"Coming soon", storiesH:"The stories",
+   storyOf:(k,n)=>`Story ${k} of ${n}`, factL:"Fun fact", soonH:"Still developing…", soonP:"Photo ideas for this issue, coming soon.",
+   quoteL:"Karim speaks out", prev:"Previous issue", next:"Next issue", view:"See photo big",
+   foot1:"Made with love for Yakut and Karim", foot2:"No dads were harmed in the making of this magazine. Karim is just very tired.",
+   close:"Close", lbPrev:"Previous photo", lbNext:"Next photo", title:"Yakut's Royal World Tour", nav:"Countries"},
+ fr:{sub:"Tour du monde royal", all:"Tous les numéros", mast:"YAKUT", no:"N°", kicker:"Le tour du monde royal · Novembre 2026",
+   line:"Née le 30 juin 2026. Onze pays. Un Karim très fatigué.",
+   p:"Yakut est née le 30 juin 2026 et elle est tout de suite partie faire le tour du monde, déguisée. Chaque pays est un numéro de magazine, plein de photos et de vraies (ou presque) histoires. Son papa Karim est venu pour porter les bagages.",
+   cta:"Commencer par le Maroc", badge:["30","juin"], standH:"Choisis un numéro", standP:n=>`${n} photos, chacune avec son histoire.`,
+   photos:n=>n?`${n} photo${n===1?"":"s"}`:"Bientôt", storiesH:"Les histoires",
+   storyOf:(k,n)=>`Histoire ${k} sur ${n}`, factL:"Le saviez-vous ?", soonH:"En cours de développement…", soonP:"Des idées de photos pour ce numéro, bientôt.",
+   quoteL:"Karim prend la parole", prev:"Numéro précédent", next:"Numéro suivant", view:"Voir la photo en grand",
+   foot1:"Fait avec amour pour Yakut et Karim", foot2:"Aucun papa n'a été blessé pendant la création de ce magazine. Karim est juste très fatigué.",
+   close:"Fermer", lbPrev:"Photo précédente", lbNext:"Photo suivante", title:"Le tour du monde royal de Yakut", nav:"Pays"},
+ ar:{sub:"الجولة الملكية ف العالم", all:"كاع الأعداد", mast:"ياقوت", no:"العدد", kicker:"الجولة الملكية ف العالم · نونبر 2026",
+   line:"تزادت نهار 30 يونيو 2026. حداش بلاد. وكريم عيان بزاف.",
+   p:"ياقوت تزادت نهار 30 يونيو 2026 ودغيا خرجات تدور العالم، ولابسة اللبسة ديال كل بلاد. كل بلاد هي عدد ديال المجلة، عامر بالتصاور والحكايات (تقريبا) الحقيقية. وباباها كريم جا معاها باش يهز الباليزات.",
+   cta:"بدا من المغرب", badge:["30","يونيو"], standH:"ختار عدد", standP:n=>`${n} تصويرة، وكل وحدة عندها الحكاية ديالها.`,
+   photos:n=>n?(n===1?"تصويرة وحدة":`${n} تصاور`):"قريبا", storiesH:"الحكايات",
+   storyOf:(k,n)=>`الحكاية ${k} من ${n}`, factL:"واش كنتي عارف؟", soonH:"باقي كيتحمضو…", soonP:"أفكار ديال تصاور لهاد العدد، قريبا.",
+   quoteL:"كريم كيهضر", prev:"العدد اللي قبل", next:"العدد الجاي", view:"شوف التصويرة كبيرة",
+   foot1:"تصاوب بالحب لياقوت وكريم", foot2:"حتى بابا ما تضر ف صناعة هاد المجلة. كريم غير عيان بزاف.",
+   close:"سد", lbPrev:"التصويرة اللي قبل", lbNext:"التصويرة الجاية", title:"الجولة الملكية ديال ياقوت", nav:"البلدان"}
+};
+const TR={fr:FR, ar:AR};
+let LANG="en"; try{ LANG=localStorage.getItem("yakut-lang")||"en"; }catch(e){}
+if(!UI[LANG]) LANG="en";
+const ui=()=>UI[LANG];
+function L(w){ // the world in the current language
+  const t=TR[LANG]&&TR[LANG][w.id]; if(!t) return w;
+  return Object.assign({},w,t,{scenes:w.scenes.map((s,k)=>Object.assign({},s,t.scenes[k]||{}))});
+}
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const nPhotos=w=>w.scenes.reduce((m,s)=>m+(s.imgs?s.imgs.length:0),0);
+const STAR=`<svg viewBox="0 0 40 40" aria-hidden="true"><path fill="currentColor" d="M20 1l5.6 7.8 9.5-1.9-1.9 9.5L41 20l-7.8 3.6 1.9 9.5-9.5-1.9L20 39l-3.6-7.8-9.5 1.9 1.9-9.5L1 20l7.8-3.6-1.9-9.5 9.5 1.9z" transform="translate(-0.5 0)"/><circle cx="20" cy="20" r="6" style="fill:var(--paper)"/></svg>`;
+const ZOOM=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>`;
+const CAM=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>`;
+
+function cover(w,i){ const x=L(w);
+  return `<div class="cover" data-w="${w.id}">
+    <img src="${w.cover}" style="object-position:${w.coverPos||"50% 35%"}" alt="" loading="lazy">
+    <div class="cv-top"><div class="cv-mast">${esc(ui().mast)}</div><div class="cv-issue">${esc(ui().no)} ${pad(i+1)} · ${esc(x.country)}</div></div>
+    <div class="cv-bottom"><div class="cv-title">${esc(x.title)}</div><div class="cv-line"><span class="cv-dot"></span>${esc(x.lines[0][1])}</div></div>
+  </div>`;
+}
+
+function chrome(cur){
+  $("#logo").innerHTML=`${STAR}<span><b>${LANG==="ar"?"ياقوت":"Yakut"}</b><small>${esc(ui().sub)}</small></span>`;
+  $("#nav").setAttribute("aria-label",ui().nav);
+  $("#nav").innerHTML=`<a href="#" ${!cur?'aria-current="page"':''}>${esc(ui().all)}</a>`+
+    WORLDS.map(w=>`<a href="#${w.id}" ${cur===w.id?'aria-current="page"':''}>${esc(L(w).country)}</a>`).join("");
+  const a=$("#nav [aria-current]"); if(a) a.scrollIntoView({block:"nearest",inline:"center"});
+  document.querySelectorAll(".langs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===LANG));
+  $("#foot").innerHTML=`<span class="z">${STAR}${esc(ui().foot1)}</span><span>${esc(ui().foot2)}</span>`;
+  $("#lbClose").setAttribute("aria-label",ui().close);$("#lbPrev").setAttribute("aria-label",ui().lbPrev);$("#lbNext").setAttribute("aria-label",ui().lbNext);
+  document.documentElement.lang=LANG; document.documentElement.dir=LANG==="ar"?"rtl":"ltr";
+  document.title=ui().title;
+}
+
+function renderHome(){
+  document.documentElement.dataset.w="home";
+  const total=WORLDS.reduce((m,w)=>m+nPhotos(w),0);
+  const word=ui().mast==="YAKUT"?"Yakut":"ياقوت";
+  const title=LANG==="ar"?`<span style="--i:0">${word}</span><span class="star" style="--i:1">.</span>`
+     :[...word].map((c,i)=>`<span style="--i:${i}">${c}</span>`).join("")+`<span class="star" style="--i:6">.</span>`;
+  const pics=["img/mor-tea.jpg","img/egy-banquet.jpg","img/japan-sumo2.jpg","img/nor-aurora.jpg"];
+  $("#app").innerHTML=`
+  <section class="wrap hero">
+    <div>
+      <div class="kicker">${esc(ui().kicker)}</div>
+      <h1 aria-label="${word}">${title}</h1>
+      <div class="line">${esc(ui().line)}</div>
+      <p>${esc(ui().p)}</p>
+      <a class="btn" href="#morocco">${esc(ui().cta)} <span class="arr">→</span></a>
+    </div>
+    <div class="mosaic" aria-hidden="true">
+      ${pics.map((p,i)=>`<figure class="m${i+1}" style="--i:${i}"><img src="${p}" alt=""></figure>`).join("")}
+      <div class="badge"><span><b>${ui().badge[0]}</b>${esc(ui().badge[1])}</span></div>
+    </div>
+  </section>
+  <section class="wrap stand">
+    <div class="section-head"><h2>${esc(ui().standH)}</h2><p>${esc(ui().standP(total))}</p></div>
+    <div class="issues">
+      ${WORLDS.map((w,i)=>`<a class="issue" data-w="${w.id}" href="#${w.id}" style="--i:${i}">${cover(w,i)}
+        <div class="issue-meta"><span><b>${esc(ui().no)} ${pad(i+1)}</b> · ${esc(L(w).country)}</span><span>${esc(ui().photos(nPhotos(w)))}</span></div></a>`).join("")}
+    </div>
+  </section>`;
+  startSky({shape:"bubble",colors:["#ff8fb1","#6fb8ff","#5fd3b4","#b28dff","#ffc24d"],n:18,dir:-1});
+}
+
+let current=[];
+function renderWorld(w){
+  const i=WORLDS.indexOf(w), x=L(w); document.documentElement.dataset.w=w.id;
+  const prev=WORLDS[(i-1+WORLDS.length)%WORLDS.length], next=WORLDS[(i+1)%WORLDS.length];
+  const shot=x.scenes.filter(s=>s.imgs), dev=x.scenes.filter(s=>!s.imgs);
+  current=[]; shot.forEach(s=>s.imgs.forEach(src=>current.push({img:src,t:s.t,c:s.c})));
+  const idx=src=>current.findIndex(c=>c.img===src);
+  $("#app").innerHTML=`
+  <section class="opener"><div class="wrap">
+    <div>
+      <div class="kicker">${esc(ui().no)} ${pad(i+1)} · ${esc(x.country)} · ${esc(x.place)}</div>
+      <h1>${esc(x.title)}</h1>
+      <div class="role">${esc(x.role)}</div>
+      <p class="tag">${esc(x.tag)}</p>
+      <div class="fact">${STAR}<div><b>${esc(ui().factL)}</b><span>${esc(x.fact)}</span></div></div>
+    </div>
+    <div class="cover-wrap">${cover(w,i)}</div>
+  </div></section>
+  <section class="wrap stories" aria-label="${esc(ui().storiesH)}">
+    ${shot.map((s,k)=>`<article class="story${k%2?" flip":""}">
+      <div class="pics${s.imgs.length>1?" two":""}">
+        ${s.imgs.map((src,j)=>`<button class="ph" data-idx="${idx(src)}" aria-label="${esc(ui().view)}: ${esc(s.t)}"><img src="${src}" alt="${esc(s.t)}" ${k>0?'loading="lazy"':''}><span class="zoom">${ZOOM}</span></button>`).join("")}
+      </div>
+      <div>
+        <div class="story-no">${esc(ui().storyOf(pad(k+1),pad(shot.length)))}</div>
+        <h2>${esc(s.t)}</h2>
+        <p class="kick">${esc(s.c)}</p>
+        <p class="tale">${esc(s.story)}</p>
+      </div>
+    </article>`).join("")}
+  </section>
+  ${dev.length?`<section class="wrap soon"><h2>${esc(ui().soonH)}</h2><p>${esc(ui().soonP)}</p>
+    <div class="ideas">${dev.map(s=>`<div class="idea">${CAM}<h3>${esc(s.t)}</h3><p>${esc(s.c)}</p></div>`).join("")}</div></section>`:""}
+  <section class="quote"><div class="wrap">
+    <div class="mark" aria-hidden="true">“</div>
+    <div><div class="kicker">${esc(ui().quoteL)}</div><blockquote>${esc(x.quote)}</blockquote><cite>— ${esc(x.by)}</cite></div>
+  </div></section>
+  <nav class="wrap pager" aria-label="${esc(ui().all)}">
+    <a href="#${prev.id}">${cover(prev,WORLDS.indexOf(prev))}<span><small>${LANG==="ar"?"→":"←"} ${esc(ui().prev)}</small><strong>${esc(L(prev).title)}</strong></span></a>
+    <a class="nx" href="#${next.id}">${cover(next,WORLDS.indexOf(next))}<span><small>${esc(ui().next)} ${LANG==="ar"?"←":"→"}</small><strong>${esc(L(next).title)}</strong></span></a>
+  </nav>`;
+  document.querySelectorAll(".ph").forEach(b=>b.addEventListener("click",()=>openLb(+b.dataset.idx)));
+  startSky(Object.assign({},w.sky,{n:Math.round(w.sky.n*.45)}));
+}
+
+function route(keepScroll){ const w=WORLDS.find(x=>x.id===location.hash.slice(1));
+  chrome(w?w.id:null); w?renderWorld(w):renderHome(); if(!keepScroll) window.scrollTo({top:0,behavior:"instant"}); }
+addEventListener("hashchange",()=>route());
+document.querySelectorAll(".langs button").forEach(b=>b.addEventListener("click",()=>{
+  LANG=b.dataset.lang; try{localStorage.setItem("yakut-lang",LANG)}catch(e){} route(true); }));
+
+/* lightbox */
+const lb=$("#lb"); let li=0;
+function showLb(){const s=current[li]; $("#lbImg").src=s.img; $("#lbImg").alt=s.t; $("#lbTitle").textContent=s.t; $("#lbCap").textContent=s.c; $("#lbPrev").hidden=$("#lbNext").hidden=current.length<2;}
+function openLb(i){li=i;showLb();try{lb.showModal()}catch(e){lb.setAttribute("open","")}}
+$("#lbClose").onclick=()=>lb.close();
+$("#lbPrev").onclick=()=>{li=(li-1+current.length)%current.length;showLb()};
+$("#lbNext").onclick=()=>{li=(li+1)%current.length;showLb()};
+lb.addEventListener("click",e=>{if(e.target===lb)lb.close()});
+addEventListener("keydown",e=>{if(!lb.open)return;if(e.key==="ArrowLeft")$("#lbPrev").click();if(e.key==="ArrowRight")$("#lbNext").click()});
+
+/* gentle weather for each country */
+const cv=$("#sky"),cx=cv.getContext("2d");let parts=[],cfg=null,raf=0,W=0,H=0;
+function size(){const d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)}
+addEventListener("resize",size);size();
+function spawn(init){const c=cfg,r=c.shape==="bubble"?3+Math.random()*4:c.shape==="dot"?1+Math.random()*2.4:c.shape==="spark"?1+Math.random()*2.2:c.shape==="dust"?1+Math.random()*2.5:5+Math.random()*6;
+  return{x:Math.random()*W,y:init?Math.random()*H:(c.dir<0?H+20:c.dir>0?-20:Math.random()*H),vx:c.dir===0?.4+Math.random()*.9:(Math.random()-.5)*.5,
+    vy:c.dir*(.25+Math.random()*(c.shape==="dot"?.9:.6)),r,rot:Math.random()*6.28,vr:(Math.random()-.5)*.04,ph:Math.random()*6.28,
+    col:c.colors[Math.floor(Math.random()*c.colors.length)],a:.35+Math.random()*.55}}
+function startSky(c){cfg=c;parts=Array.from({length:W<600?Math.round(c.n*.5):c.n},()=>spawn(true));
+  if(reduced){cx.clearRect(0,0,W,H);return} if(!raf)raf=requestAnimationFrame(tick)}
+function tick(){cx.clearRect(0,0,W,H);
+  for(const p of parts){p.ph+=.02;p.x+=p.vx+Math.sin(p.ph)*.35;p.y+=p.vy;p.rot+=p.vr;
+    if(p.y>H+30||p.y<-30||p.x>W+30||p.x<-30){Object.assign(p,spawn(false));if(cfg.dir===0)p.x=-20}
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.col;
+    if(cfg.shape==="bubble"){cx.globalAlpha=.55;cx.lineWidth=2;cx.strokeStyle=p.col;cx.beginPath();cx.arc(0,0,p.r*3.2,0,6.28);cx.stroke();cx.globalAlpha=.12;cx.fill();cx.globalAlpha=.8;cx.fillStyle="#fff";cx.beginPath();cx.arc(-p.r,-p.r,p.r*.7,0,6.28);cx.fill()}
+    else if(cfg.shape==="spark"){cx.globalAlpha=p.a*(.55+.45*Math.sin(p.ph*2));cx.beginPath();for(let k=0;k<4;k++){cx.rotate(Math.PI/2);cx.moveTo(0,0);cx.quadraticCurveTo(p.r*.4,p.r*.4,0,p.r*2.6)}cx.fill()}
+    else if(cfg.shape==="petal"){cx.globalAlpha=p.a;cx.beginPath();cx.ellipse(0,0,p.r,p.r*.55*Math.abs(Math.sin(p.ph))+1,0,0,6.28);cx.fill()}
+    else if(cfg.shape==="leaf"){cx.globalAlpha=p.a;cx.beginPath();cx.moveTo(-p.r,0);cx.quadraticCurveTo(0,-p.r*.6,p.r,0);cx.quadraticCurveTo(0,p.r*.6,-p.r,0);cx.fill()}
+    else if(cfg.shape==="rect"){cx.globalAlpha=p.a;cx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2*Math.abs(Math.cos(p.ph))+1)}
+    else{cx.globalAlpha=p.a*.8;cx.beginPath();cx.arc(0,0,p.r,0,6.28);cx.fill()}
+    cx.restore()}
+  raf=requestAnimationFrame(tick)}
+route();
+</script>
+</body>
+</html>
